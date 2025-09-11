@@ -140,7 +140,30 @@
               </a>
             </li>
 
-            
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#hr" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Maju career</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              </a>
+              <div class="collapse" id="hr">
+                <ul class="nav flex-column sub-menu">
+                
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('jobs.create') }}">Add Jobs</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('jobs.index')}}">View Jobs</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="">View Applications</a>
+                  </li>
+
+                </ul>
+              </div>
+            </li>
+
         
             <li class="nav-item">
               <a class="nav-link" href="#">

@@ -1,7 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CareerJobController;
 
-Route::get('/admin', function() {
-    return view('admin.pages.index'); // Ensure folder matches for case sensitivity
+Route::get('/admin', function () {
+    return view('admin.pages.index');
+});
+
+// Career Job Routes
+Route::prefix('admin')->group(function () {
+    Route::get('/create-job', [CareerJobController::class, 'create'])->name('jobs.create');
+    Route::post('/store-job', [CareerJobController::class, 'store'])->name('jobs.store');
+    Route::get('/jobs', [CareerJobController::class, 'index'])->name('jobs.index');
+    Route::get('/jobs/{id}/edit', [CareerJobController::class, 'edit'])->name('jobs.edit');
+    Route::put('/jobs/{id}', [CareerJobController::class, 'update'])->name('jobs.update');
+    Route::delete('/jobs/{id}', [CareerJobController::class, 'destroy'])->name('jobs.destroy');
+
+
+
 });

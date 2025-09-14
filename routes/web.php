@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CareerJobController;
+use App\Http\Controllers\UserJobController;
 
 Route::get('/admin', function () {
     return view('admin.pages.index');
@@ -19,3 +20,5 @@ Route::prefix('admin')->group(function () {
 
 
 });
+
+Route::get('/', [UserJobController::class, 'index'])->name('user.index');

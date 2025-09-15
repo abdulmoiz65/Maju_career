@@ -72,6 +72,7 @@
 </div>
 
 {{-- Post Applied --}}
+
 <div class="mb-3">
     <label class="form-label d-block">Post Applied For <span class="text-danger">*</span></label>
     @foreach(['professor' => 'Professor', 'associate_professor' => 'Associate Professor', 'assistant_professor' => 'Assistant Professor', 'lecturer' => 'Lecturer', 'instructor' => 'Instructor', 'lab_engineer' => 'Lab Engineer'] as $value => $label)

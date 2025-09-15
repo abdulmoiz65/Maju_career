@@ -18,31 +18,22 @@ class CareerJobController extends Controller
     /**
      * Store a new job in database.
      */
-    public function store(Request $request)
-    {
-        // ✅ Validation
-        $request->validate([
-            'title'       => 'required|string|max:200',
-            'contact'     => 'nullable|string|max:255',
-            'job_type'    => 'required|in:Permanent,Visiting,Staff',
-            'description' => 'required|string',
-            'status'      => 'required|in:Active,Inactive',
-        ]);
+public function store(Request $request)
+{
+    $data = $request->validate([
+        'title'       => 'required|string|max:200',
+        'contact'     => 'nullable|string|max:255',
+        'job_type'    => 'required|in:permanent_faculty,visiting_faculty,staff',
+        'description' => 'required|string',
+        'status'      => 'required|in:Active,Inactive',
+    ]);
 
-        
-        CareerJob::create([
-            'title'       => $request->title,
-            'contact'     => $request->contact,
-            'job_type'    => $request->job_type,
-            'description' => $request->description,
-            'status'      => $request->status,
-        ]);
+    CareerJob::create($data); // ✅ Only once
 
-        
-        return redirect()
-            ->back()
-            ->with('success', 'Job posted successfully!');
-    }
+    return redirect()
+        ->route('jobs.index')
+        ->with('success', 'Job posted successfully!');
+}
 
     public function edit($id)
 {
@@ -59,7 +50,7 @@ class CareerJobController extends Controller
     $validated = $request->validate([
         'title'       => 'required|string|max:200',
         'contact'     => 'nullable|string|max:255',
-        'job_type'    => 'required|in:Permanent,Visiting,Staff',
+        'job_type'    => 'required|in:permanent_faculty,visiting_faculty,staff',
         'description' => 'required|string',
         'status'      => 'required|in:Active,Inactive',
     ]);

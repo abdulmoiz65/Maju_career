@@ -43,14 +43,24 @@
                    class="form-control">
           </div>
 
-          <div class="form-group">
-            <label for="job_type">Job Type</label>
-            <select id="job_type" name="job_type" class="form-control" required>
-              <option value="Permanent" {{ old('job_type', $job->job_type) == 'Permanent' ? 'selected' : '' }}>Permanent</option>
-              <option value="Visiting" {{ old('job_type', $job->job_type) == 'Visiting' ? 'selected' : '' }}>Visiting</option>
-              <option value="Staff" {{ old('job_type', $job->job_type) == 'Staff' ? 'selected' : '' }}>Staff</option>
-            </select>
-          </div>
+    <div class="form-group">
+    <label for="job_type">Job Type</label>
+    <select id="job_type" name="job_type" class="form-control" required>
+        <option value="permanent_faculty"
+            {{ old('job_type', $job->job_type) == 'permanent_faculty' ? 'selected' : '' }}>
+            Permanent Faculty
+        </option>
+        <option value="visiting_faculty"
+            {{ old('job_type', $job->job_type) == 'visiting_faculty' ? 'selected' : '' }}>
+            Visiting Faculty
+        </option>
+        <option value="staff"
+            {{ old('job_type', $job->job_type) == 'staff' ? 'selected' : '' }}>
+            Staff
+        </option>
+    </select>
+</div>
+
 
           <div class="form-group">
             <label for="description">Job Description</label>

@@ -52,21 +52,29 @@
 
           {{-- Job Type --}}
           <div class="form-group">
-            <label for="job_type">Job Type</label>
-            <select 
-              id="job_type" 
-              name="job_type" 
-              class="form-control @error('job_type') is-invalid @enderror" 
-              required>
-              <option value="">Select type</option>
-              <option value="Permanent" {{ old('job_type') == 'Permanent' ? 'selected' : '' }}>Permanent</option>
-              <option value="Visiting" {{ old('job_type') == 'Visiting' ? 'selected' : '' }}>Visiting</option>
-              <option value="Staff" {{ old('job_type') == 'Staff' ? 'selected' : '' }}>Staff</option>
-            </select>
-            @error('job_type')
-              <span class="text-danger">{{ $message }}</span>
-            @enderror
-          </div>
+    <label for="job_type">Job Type</label>
+    <select 
+        id="job_type"
+        name="job_type"
+        class="form-control @error('job_type') is-invalid @enderror"
+        required
+    >
+        <option value="">Select type</option>
+        <option value="permanent_faculty" {{ old('job_type') == 'permanent_faculty' ? 'selected' : '' }}>
+            Permanent Faculty
+        </option>
+        <option value="visiting_faculty" {{ old('job_type') == 'visiting_faculty' ? 'selected' : '' }}>
+            Visiting Faculty
+        </option>
+        <option value="staff" {{ old('job_type') == 'staff' ? 'selected' : '' }}>
+            Staff
+        </option>
+    </select>
+    @error('job_type')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+
 
           {{-- Job Description --}}
           <div class="form-group">

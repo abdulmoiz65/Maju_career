@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title', 200);
             $table->string('contact', 255)->nullable();
-            $table->enum('job_type', ['Permanent', 'Visiting', 'Staff']);
+            $table->enum('job_type', ['permanent_faculty', 'visiting_faculty', 'staff']);
             $table->text('description');
             $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->timestamps();

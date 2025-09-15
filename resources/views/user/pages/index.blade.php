@@ -42,18 +42,20 @@
   
               <div class="job-actions">
                 <div>
-                    <button class="btn btn-apply" data-bs-toggle="modal" data-bs-target="#jobModal"
-                    onclick='showJobDetails(
-                        @json($job->title),
-                        @json("Mohammad Ali Jinnah University"),
-                        @json($job->job_type),
-                        @json(Str::limit($job->description, 300)),
-                        @json(rand(10,80)),
-                        @json($job->contact ?? "careers@jinnah.edu"),
-                        @json($job->created_at->diffForHumans())
-                    )'>
-                    <i class="fas fa-eye me-2"></i> View Detail
-                </button>
+                   <button class="btn btn-apply" data-bs-toggle="modal" data-bs-target="#jobModal"
+    onclick='showJobDetails(
+        @json($job->id),
+        @json($job->title),
+        @json("Mohammad Ali Jinnah University"),
+        @json($job->job_type),
+        @json(Str::limit($job->description, 1500)),
+        @json(rand(10,80)),
+        @json($job->contact ?? "careers@jinnah.edu"),
+        @json($job->created_at->diffForHumans())
+    )'>
+    <i class="fas fa-eye me-2"></i> View Detail
+</button>
+
                 
                 
                 </div>
@@ -78,20 +80,27 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                      <div class="row">
+                         <div class="col-md-6">
                         <div class="job-detail-item">
                             <span class="job-detail-label">Job Title</span>
                             <div class="job-detail-value" id="modalJobTitle"></div>
                         </div>
+                        </div>
                         
+                        <div class="col-md-6">
+                        <div class="job-detail-item">
+                            <span class="job-detail-label">Job Type</span>
+                            <div class="job-detail-value" id="modalJobType"></div>
+                        </div>
+                        </div>
+                        </div>
+
                         <div class="job-detail-item">
                             <span class="job-detail-label">University Name</span>
                             <div class="job-detail-value" id="modalUniversityName"></div>
                         </div>
                         
-                        <div class="job-detail-item">
-                            <span class="job-detail-label">Job Type</span>
-                            <div class="job-detail-value" id="modalJobType"></div>
-                        </div>
                         
                         <div class="job-detail-item">
                             <span class="job-detail-label">Description</span>
@@ -120,9 +129,16 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-apply-modal">
-                            <i class="fas fa-paper-plane me-2"></i> Apply Now
-                        </button>
+<a href="{{ route('applications.create', $job->id) }}"
+   class="btn btn-apply-modal">
+    <i class="fas fa-paper-plane me-2"></i> Apply Now
+</a>
+
+
+
+
+
+
                     </div>
                     
                     

@@ -85,12 +85,22 @@
 </div>
 
 {{-- Attachments --}}
+<div class="form-section">
+    <h6 class="mb-3">Attachments</h6>
+    <div class="row g-3 ">
+        <div class="col-md-6">
 <div class="mb-3">
     <label class="form-label">Resume (PDF/DOC, Max 5MB)</label>
     <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx" required>
 </div>
+</div>
+
+        <div class="col-md-6">
 
 <div class="mb-3">
     <label class="form-label">Current Photo (Max 10MB)</label>
     <input type="file" name="photo" class="form-control" accept="image/*" required>
+</div>
+        </div>
+    </div>
 </div>

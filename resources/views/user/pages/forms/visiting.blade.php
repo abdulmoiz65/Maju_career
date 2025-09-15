@@ -84,35 +84,64 @@
 </div>
 
 {{-- Organization Recent --}}
+<div class="form-section">
+    <h6 class="mb-3">Employment History (Recent)</h6>
+    <div class="row g-3 ">
+        <div class="col-md-6">
 <div class="mb-3">
     <label class="form-label">Name of Organization (Recent)</label>
     <input type="text" name="org_recent" class="form-control" value="{{ old('org_recent') }}">
 </div>
+        </div>
 
 {{-- Designation Recent --}}
+        <div class="col-md-6">
 <div class="mb-3">
     <label class="form-label">Designation (Recent)</label>
     <input type="text" name="designation_recent" class="form-control" value="{{ old('designation_recent') }}">
 </div>
+        </div>
+    </div>
+</div>
 
 {{-- Experience --}}
+
+<div class="form-section">
+    <h6 class="mb-3">Visiting Faculty Details</h6>
+    <div class="row g-3 ">
+        <div class="col-md-6">
 <div class="mb-3">
     <label class="form-label">Years of Experience in Academia</label>
     <input type="number" name="years_academia" class="form-control" min="0" value="{{ old('years_academia') }}">
 </div>
+        </div>
 
+        <div class="col-md-6">
 <div class="mb-3">
     <label class="form-label">Years of Experience in Industry</label>
     <input type="number" name="years_industry" class="form-control" min="0" value="{{ old('years_industry') }}">
 </div>
+        </div>
+    </div>
+</div>
 
 {{-- Attachments --}}
-<div class="mb-3">
+<div class="form-section">
+    <h6 class="mb-3">Attachments</h6>
+    <div class="row g-3 ">
+        <div class="col-md-6">
+        <div class="mb-3">
     <label class="form-label">Current Photo (Max 10MB)</label>
     <input type="file" name="photo" class="form-control" accept="image/*" required>
 </div>
+</div>
 
+
+        <div class="col-md-6">
 <div class="mb-3">
     <label class="form-label">Resume (PDF/DOC, Max 5MB)</label>
     <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx" required>
+</div>
+        </div>
+</div>
 </div>

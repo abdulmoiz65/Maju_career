@@ -74,6 +74,10 @@
 </div>
 
 {{-- Attachments --}}
+
+<div class="form-section">
+    <h6 class="mb-3">Attachments</h6>
+
 <div class="mb-3">
     <label class="form-label">Resume (PDF/DOC, Max 5MB)</label>
     <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx" required>
@@ -83,3 +87,5 @@
     <label class="form-label">Highest Degree Certificate (PDF/Image, Max 5MB)</label>
     <input type="file" name="degree_certificate" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
 </div>
+</div>
+

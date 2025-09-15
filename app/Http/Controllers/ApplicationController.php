@@ -24,10 +24,18 @@ class ApplicationController extends Controller
             'postal_address' => $request->postal_address,
             'city' => $request->city,
         ]);
-
+    
+        // Helper function for file uploads
+        $saveFile = function ($field, $folder) use ($request) {
+            if ($request->hasFile($field)) {
+                return $request->file($field)->store("uploads/$folder", 'public');
+            }
+            return null;
+        };
+    
         // Step 2: Save extra details based on job type
         if ($request->job_type === 'permanent_faculty') {
-            $application->permanentFaculty()->create($request->only([
+            $data = $request->only([
                 'highest_degree',
                 'specialization',
                 'institute',
@@ -35,13 +43,22 @@ class ApplicationController extends Controller
                 'post_applied',
                 'org_recent',
                 'designation_recent',
-                'resume',
-                'degree_certificate'
-            ]));
+            ]);
+    
+            // Convert array → string
+            if (isset($data['post_applied']) && is_array($data['post_applied'])) {
+                $data['post_applied'] = implode(',', $data['post_applied']);
+            }
+    
+            // Handle file uploads
+            $data['resume'] = $saveFile('resume', 'resume');
+            $data['degree_certificate'] = $saveFile('degree_certificate', 'degree');
+    
+            $application->permanentFaculty()->create($data);
         }
-
+    
         if ($request->job_type === 'visiting_faculty') {
-            $application->visitingFaculty()->create($request->only([
+            $data = $request->only([
                 'gender',
                 'join_date',
                 'highest_degree',
@@ -54,13 +71,20 @@ class ApplicationController extends Controller
                 'designation_recent',
                 'years_academia',
                 'years_industry',
-                'photo',
-                'resume'
-            ]));
+            ]);
+    
+            if (isset($data['post_applied']) && is_array($data['post_applied'])) {
+                $data['post_applied'] = implode(',', $data['post_applied']);
+            }
+    
+            $data['photo'] = $saveFile('photo', 'photos');
+            $data['resume'] = $saveFile('resume', 'resume');
+    
+            $application->visitingFaculty()->create($data);
         }
-
+    
         if ($request->job_type === 'staff') {
-            $application->staff()->create($request->only([
+            $data = $request->only([
                 'gender',
                 'post_applied',
                 'join_date',
@@ -72,14 +96,21 @@ class ApplicationController extends Controller
                 'designation_recent',
                 'date_of_joining',
                 'years_experience',
-                'resume',
-                'photo'
-            ]));
+            ]);
+    
+            if (isset($data['post_applied']) && is_array($data['post_applied'])) {
+                $data['post_applied'] = implode(',', $data['post_applied']);
+            }
+    
+            $data['resume'] = $saveFile('resume', 'resume');
+            $data['photo'] = $saveFile('photo', 'photos');
+    
+            $application->staff()->create($data);
         }
-
+    
         return redirect()->back()->with('success', 'Application submitted successfully!');
     }
-
+    
 public function create($jobId)
 {
     $job = \App\Models\CareerJob::findOrFail($jobId);

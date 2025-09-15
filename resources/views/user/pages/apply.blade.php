@@ -15,6 +15,15 @@
 </head>
 <body>
 
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+
+
 <div class="container max-600 my-4">
     <h2 class="mb-4 text-capitalize">Apply for {{ str_replace('_',' ', $job_type) }}</h2>
 

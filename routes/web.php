@@ -29,6 +29,5 @@ Route::get('/', [UserJobController::class, 'index'])->name('user.index');
 
 Route::get('/apply/{job}', [ApplicationController::class, 'create'])->name('applications.create');
 
-
-
 Route::post('/apply', [ApplicationController::class, 'store'])->name('applications.store');
+

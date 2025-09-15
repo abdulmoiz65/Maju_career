@@ -7,6 +7,6 @@ function showJobDetails(id, title, university, jobType, description, application
     document.getElementById('modalContact').innerText = contact;
     document.getElementById('modalUploadDate').innerText = uploadDate;
 
-    // 🔹 Update Apply Now button link dynamically
-    document.querySelector('#jobModal .btn-apply-modal').href = `/apply/${id}`;
+    // ✅ Update Apply link dynamically
+    document.getElementById('applyLink').href = "/apply/" + id;
 }

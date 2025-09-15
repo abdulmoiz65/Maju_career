@@ -23,6 +23,11 @@
   
       <!-- Job Cards Row -->
       <div class="row g-4">
+         @if($jobs->isEmpty())
+        <div class="col-12">
+            <h1 class="text-center text-muted">No jobs available at the moment.</h1>
+        </div>
+    @else
         @foreach($jobs as $job)
           <div class="col-lg-4 col-md-6">
             <div class="job-card">
@@ -43,21 +48,18 @@
               <div class="job-actions">
                 <div>
                    <button class="btn btn-apply" data-bs-toggle="modal" data-bs-target="#jobModal"
-    onclick='showJobDetails(
-        @json($job->id),
-        @json($job->title),
-        @json("Mohammad Ali Jinnah University"),
-        @json($job->job_type),
-        @json(Str::limit($job->description, 1500)),
-        @json(rand(10,80)),
-        @json($job->contact ?? "careers@jinnah.edu"),
-        @json($job->created_at->diffForHumans())
-    )'>
-    <i class="fas fa-eye me-2"></i> View Detail
-</button>
-
-                
-                
+                      onclick='showJobDetails(
+                          @json($job->id),
+                          @json($job->title),
+                          @json("Mohammad Ali Jinnah University"),
+                          @json($job->job_type),
+                          @json(Str::limit($job->description, 1500)),
+                          @json(rand(10,80)),
+                          @json($job->contact ?? "careers@jinnah.edu"),
+                          @json($job->created_at->diffForHumans())
+                      )'>
+                      <i class="fas fa-eye me-2"></i> View Detail
+                  </button>      
                 </div>
                 <div class="d-flex align-items-center gap-2">
                   <span class="job-date">{{ $job->created_at->diffForHumans() }}</span>
@@ -66,6 +68,7 @@
             </div>
           </div>
         @endforeach
+    @endif
       </div>
     </div>
   </section>
@@ -129,10 +132,11 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<a href="{{ route('applications.create', $job->id) }}"
-   class="btn btn-apply-modal">
-    <i class="fas fa-paper-plane me-2"></i> Apply Now
-</a>
+                        <a id="applyLink" href="#"
+                        class="btn btn-apply-modal">
+                         <i class="fas fa-paper-plane me-2"></i> Apply Now
+                     </a>
+                     
 
 
 

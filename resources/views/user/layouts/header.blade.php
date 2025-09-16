@@ -10,29 +10,56 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#"><img src="{{asset('images/logofavwhite.png')}}" alt="MAJU Logo" class="me-2" style="height: 60px;"></i>MAJU Career</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        {{-- <a class="nav-link" href="#about">About</a> --}}
-                    </li>
-                    <li class="nav-item">
-                        {{-- <a class="nav-link" href="#contact">Contact</a> --}}
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <a href="login.html" class="btn btn-login">
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('images/logofavwhite.png') }}" alt="MAJU Logo" class="me-2" style="height: 60px;">
+            MAJU Career
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="ms-auto d-flex align-items-center">
+
+                {{-- When user is **not** logged in --}}
+                @guest
+                    <a href="{{ route('login.form') }}" class="btn btn-login">
                         <i class="fas fa-sign-in-alt me-2"></i>Login
                     </a>
-                </div>
+                @endguest
+
+                {{-- When user **is** logged in --}}
+                @auth
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button"
+                                id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-1"></i>
+                            {{ auth()->user()->username ?? auth()->user()->first_name ?? '' }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                            {{-- <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li> --}}
+                            {{-- <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li> --}}
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">
+                                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @endauth
+
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
+
 
     <!-- Hero Section -->
     <section id="home" class="hero">

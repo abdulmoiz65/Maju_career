@@ -4,6 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CareerJobController;
 use App\Http\Controllers\UserJobController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\AuthController;
+
+// ===== User Authentication =====
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login.form');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/admin', function () {
     return view('admin.pages.index');
@@ -32,4 +44,3 @@ Route::get('/admin/applications/{id}', [ApplicationController::class,'show'])
 Route::get('/apply/{job}', [ApplicationController::class, 'create'])->name('applications.create');
 
 Route::post('/apply', [ApplicationController::class, 'store'])->name('applications.store');
-

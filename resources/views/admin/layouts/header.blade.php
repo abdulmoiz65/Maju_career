@@ -160,6 +160,11 @@
                     <a class="nav-link" href="{{ route('admin.pages.view_applications')}}">View Applications</a>
                   </li>
 
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.pages.shortlisted')}}">View Shortlisted</a>
+                  </li>
+
+
                 </ul>
               </div>
             </li>

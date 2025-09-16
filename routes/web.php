@@ -32,8 +32,12 @@ Route::prefix('admin')->group(function () {
     Route::delete('/jobs/{id}', [CareerJobController::class, 'destroy'])->name('jobs.destroy');
     Route::get('/applications', [ApplicationController::class, 'index'])->name('admin.pages.view_applications');
     Route::get('/admin/applications/{id}', [ApplicationController::class,'show'])->name('admin.pages.view_application_show');
-
+    Route::post('/applications/{id}/shortlist',[ApplicationController::class, 'shortlist'])->name('admin.applications.shortlist');
+    Route::get('/applications/shortlisted', [ApplicationController::class, 'shortlisted'])->name('admin.pages.shortlisted');
+    Route::post('/applications/{id}/unshortlist', [ApplicationController::class, 'unshortlist'])->name('admin.applications.unshortlist');
 });
+
+
 
 Route::get('/', [UserJobController::class, 'index'])->name('user.index');
 // Applications
@@ -49,4 +53,3 @@ Route::middleware('auth')->group(function () {
 
 Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
-

@@ -108,8 +108,52 @@ class ApplicationController extends Controller
             $application->staff()->create($data);
         }
     
-        return redirect()->back()->with('success', 'Application submitted successfully!');
+        return redirect('/')->with('success', 'Application submitted successfully!');
     }
+
+            public function shortlist($id)
+        {
+            $application = \App\Models\Application::findOrFail($id);
+            $application->is_shortlisted = true;
+            $application->save();
+
+            return redirect()->back()->with('success', 'Application has been shortlisted.');
+        }
+
+        // unshortlist
+                public function unshortlist($id)
+        {
+            $application = \App\Models\Application::findOrFail($id);
+            $application->is_shortlisted = false;
+            $application->save();
+
+            return redirect()->back()->with('success', 'Application removed from shortlist.');
+        }
+
+
+// shortlisted application 
+                public function shortlisted(Request $request)
+        {
+            $query = \App\Models\Application::where('is_shortlisted', true);
+
+            if ($request->filled('q')) {
+                $q = $request->q;
+                $query->where(function ($sub) use ($q) {
+                    $sub->where('name', 'like', "%$q%")
+                        ->orWhere('email', 'like', "%$q%")
+                        ->orWhere('contact', 'like', "%$q%");
+                });
+            }
+
+            if ($request->filled('job_type')) {
+                $query->where('job_type', $request->job_type);
+            }
+
+            $applications = $query->paginate(10);
+
+            return view('admin.pages.shortlisted', compact('applications'));
+        }
+
     
 public function create($jobId)
 {

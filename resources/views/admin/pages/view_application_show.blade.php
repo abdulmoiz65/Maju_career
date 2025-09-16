@@ -61,6 +61,8 @@
 
         {{-- ===== HEADER with optional photo ===== --}}
         <div class="resume-header">
+
+            
             @if($profilePhoto)
                 <img src="{{ asset('storage/'.$profilePhoto) }}" alt="Photo">
             @endif
@@ -71,6 +73,30 @@
                 <p class="mb-0 text-muted">
                     {{ ucfirst(str_replace('_',' ', $application->job_type)) }} Applicant
                 </p>
+
+                @if(!$application->is_shortlisted)
+                <form method="POST"
+                      action="{{ route('admin.applications.shortlist', $application->id) }}"
+                      class="d-inline">
+                    @csrf
+                    <button class="btn btn-success btn-sm mt-2"
+                            onclick="return confirm('Shortlist this application?')">
+                        Add on Shortlist
+                    </button>
+                </form>
+            @else
+                <form method="POST"
+                      action="{{ route('admin.applications.unshortlist', $application->id) }}"
+                      class="d-inline">
+                    @csrf
+                    <button class="btn btn-info btn-sm mt-2"
+                            onclick="return confirm('Remove from shortlist?')">
+                        Remove from Shortlist
+                    </button>
+                </form>
+            @endif
+
+
             </div>
         </div>
 

@@ -5,13 +5,12 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center flex-wrap">
-          <h4 class="card-title mb-3">MAJU Career Applications</h4>
+          <h4 class="card-title mb-3">Shortlisted Applications</h4>
 
-                {{-- Success Message --}}
+           {{-- Success Message --}}
         @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-
 
           <div class="text-muted">Total: {{ $applications->total() }}</div>
         </div>
@@ -31,30 +30,11 @@
               <option value="staff" @selected(request('job_type')==='staff')>Staff</option>
             </select>
           </div>
-          <div class="col-md-2">
-            <label class="form-label">Highest Degree</label>
-            <select name="highest_degree" class="form-select">
-              <option value="">All</option>
-              <option value="phd" @selected(request('highest_degree')==='phd')>PhD</option>
-              <option value="masters18" @selected(request('highest_degree')==='masters18')>Masters (18 years)</option>
-              <option value="masters16" @selected(request('highest_degree')==='masters16')>Masters (16 years)</option>
-              <option value="bachelors" @selected(request('highest_degree')==='bachelors')>Bachelors</option>
-              <option value="other" @selected(request('highest_degree')==='other')>Other</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Min Salary</label>
-            <input type="number" name="min_salary" value="{{ request('min_salary') }}" class="form-control">
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Max Salary</label>
-            <input type="number" name="max_salary" value="{{ request('max_salary') }}" class="form-control">
-          </div>
           <div class="col-md-2 d-grid">
             <button class="btn btn-primary">Filter</button>
           </div>
           <div class="col-md-2 d-grid">
-            <a href="{{ route('admin.pages.view_applications') }}" class="btn btn-secondary">Reset</a>
+            <a href="{{ route('admin.pages.shortlisted') }}" class="btn btn-secondary">Reset</a>
           </div>
         </form>
 
@@ -92,25 +72,20 @@
                   <a href="{{ route('admin.pages.view_application_show', $app->id) }}" class="btn btn-primary btn-sm">
                     View
                   </a>
-                  @if(!$app->is_shortlisted)
-    <form method="POST"
-          action="{{ route('admin.applications.shortlist', $app->id) }}"
-          class="d-inline">
-        @csrf
-        <button class="btn btn-success btn-sm"
-                onclick="return confirm('Shortlist this application?')">
-            Shortlist
-        </button>
-    </form>
-@else
-    <span class="badge bg-info">Shortlisted</span>
-@endif
-
+                  <form method="POST"
+                        action="{{ route('admin.applications.unshortlist', $app->id) }}"
+                        class="d-inline">
+                      @csrf
+                      <button class="btn btn-danger btn-sm"
+                              onclick="return confirm('Remove from shortlist?')">
+                          Remove
+                      </button>
+                  </form>
                 </td>
               </tr>
             @empty
               <tr>
-                <td colspan="6" class="text-center">No applications found.</td>
+                <td colspan="6" class="text-center">No shortlisted applications found.</td>
               </tr>
             @endforelse
           </tbody>

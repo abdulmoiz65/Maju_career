@@ -121,5 +121,49 @@ public function create($jobId)
     ]);
 }
 
+public function index(Request $request)
+{
+    $query = Application::query()->with(['permanentFaculty', 'visitingFaculty', 'staff']);
+
+    // 🔍 Filters
+    if ($request->filled('q')) {
+        $q = $request->q;
+        $query->where(function ($sub) use ($q) {
+            $sub->where('name', 'like', "%$q%")
+                ->orWhere('email', 'like', "%$q%")
+                ->orWhere('contact', 'like', "%$q%");
+        });
+    }
+
+    if ($request->filled('job_type')) {
+        $query->where('job_type', $request->job_type);
+    }
+
+    if ($request->filled('highest_degree')) {
+        $query->whereHas('permanentFaculty', fn($q) => $q->where('highest_degree', $request->highest_degree))
+              ->orWhereHas('visitingFaculty', fn($q) => $q->where('highest_degree', $request->highest_degree))
+              ->orWhereHas('staff', fn($q) => $q->where('highest_degree', $request->highest_degree));
+    }
+
+    if ($request->filled('min_salary')) {
+        $query->whereRaw('CAST(salary_desired AS UNSIGNED) >= ?', [$request->min_salary]);
+    }
+
+    if ($request->filled('max_salary')) {
+        $query->whereRaw('CAST(salary_desired AS UNSIGNED) <= ?', [$request->max_salary]);
+    }
+
+    // 📋 Paginate results
+    $applications = $query->orderBy('created_at', 'desc')->paginate(20);
+
+    return view('admin.pages.view_applications', compact('applications'));
+}
+
+public function show($id)
+{
+    $application = Application::with(['permanentFaculty', 'visitingFaculty', 'staff'])->findOrFail($id);
+
+    return view('admin.pages.view_application_show', compact('application'));
+}
 
 }

@@ -12,17 +12,17 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="./logofavwhite.png" alt="MAJU Logo" class="me-2" style="height: 60px;"></i>MAJU Career</a>
+            <a class="navbar-brand" href="#"><img src="{{asset('images/logofavwhite.png')}}" alt="MAJU Logo" class="me-2" style="height: 60px;"></i>MAJU Career</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
+                        {{-- <a class="nav-link" href="#about">About</a> --}}
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
+                        {{-- <a class="nav-link" href="#contact">Contact</a> --}}
                     </li>
                 </ul>
                 <div class="d-flex">

@@ -157,7 +157,7 @@
                   </li>
 
                   <li class="nav-item">
-                    <a class="nav-link" href="">View Applications</a>
+                    <a class="nav-link" href="{{ route('admin.pages.view_applications')}}">View Applications</a>
                   </li>
 
                 </ul>

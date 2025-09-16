@@ -17,14 +17,16 @@ Route::prefix('admin')->group(function () {
     Route::get('/jobs/{id}/edit', [CareerJobController::class, 'edit'])->name('jobs.edit');
     Route::put('/jobs/{id}', [CareerJobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{id}', [CareerJobController::class, 'destroy'])->name('jobs.destroy');
-
-
+    Route::get('/applications', [ApplicationController::class, 'index'])->name('admin.pages.view_applications');
+    Route::get('/admin/applications/{id}', [ApplicationController::class,'show'])->name('admin.pages.view_application_show');
 
 });
 
 Route::get('/', [UserJobController::class, 'index'])->name('user.index');
 // Applications
 
+Route::get('/admin/applications/{id}', [ApplicationController::class,'show'])
+     ->name('admin.applications.show');
 
 
 Route::get('/apply/{job}', [ApplicationController::class, 'create'])->name('applications.create');

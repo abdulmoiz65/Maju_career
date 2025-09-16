@@ -131,19 +131,16 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a id="applyLink" href="#"
-                        class="btn btn-apply-modal">
-                         <i class="fas fa-paper-plane me-2"></i> Apply Now
-                     </a>
-                     
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
+                     <a id="applyLink"
+   href="{{ auth()->check() ? route('applications.create', $job->id) : route('login.form') }}"
+   class="btn btn-apply-modal">
+   <i class="fas fa-paper-plane me-2"></i> Apply Now
+</a>
 
+                  </div>
 
-
-
-
-                    </div>
                     
                     
                 </div>

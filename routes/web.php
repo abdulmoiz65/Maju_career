@@ -5,6 +5,7 @@ use App\Http\Controllers\CareerJobController;
 use App\Http\Controllers\UserJobController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GoogleController;
 
 // ===== User Authentication =====
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
@@ -40,7 +41,12 @@ Route::get('/', [UserJobController::class, 'index'])->name('user.index');
 Route::get('/admin/applications/{id}', [ApplicationController::class,'show'])
      ->name('admin.applications.show');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/apply/{job}', [ApplicationController::class, 'create'])->name('applications.create');
+    Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
+});
 
-Route::get('/apply/{job}', [ApplicationController::class, 'create'])->name('applications.create');
 
-Route::post('/apply', [ApplicationController::class, 'store'])->name('applications.store');
+Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
+

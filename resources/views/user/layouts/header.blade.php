@@ -7,6 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/maju_career_style.css') }}">
+    <script src="{{asset('js/auto_hide.js')}}"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -37,7 +38,7 @@
                         <button class="btn btn-info dropdown-toggle" type="button"
                                 id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user-circle me-1"></i>
-                            {{ auth()->user()->username ?? auth()->user()->first_name ?? '' }}
+                            {{ auth()->user()->first_name ?? auth()->user()->email ?? '' }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                             {{-- <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li> --}}
@@ -59,6 +60,25 @@
         </div>
     </div>
 </nav>
+
+@if(session('success') || session('error'))
+<!-- Flash Message Modal -->
+<div class="modal fade" id="flashModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header 
+           {{ session('success') ? 'bg-success text-white' : 'bg-danger text-white' }}">
+        <h5 class="modal-title mb-0">
+          {{ session('success') ? 'Success' : 'Error' }}
+        </h5>
+      </div>
+      <div class="modal-body fs-6">
+        {{ session('success') ?? session('error') }}
+      </div>
+    </div>
+  </div>
+</div>
+@endif
 
 
     <!-- Hero Section -->

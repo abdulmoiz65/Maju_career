@@ -35,9 +35,10 @@ class AuthController extends Controller
     return redirect()->route('user.index')->with('success', 'Welcome aboard!');
     }
 
-    public function showLogin() {
-        return view('auth.login');
-    }
+public function showLogin()
+{
+    return view('auth.login');
+}
 
     public function login(Request $request) {
         $credentials = $request->validate([
@@ -47,7 +48,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('user.index'));
+            return redirect()->route('user.index');
+
 
         }
 
@@ -64,4 +66,16 @@ class AuthController extends Controller
 
     return redirect()->route('login.form');
 }
+
+protected function redirectTo($request)
+{
+    if (! $request->expectsJson()) {
+        // Flash message before redirect
+        session()->flash('error', 'Please login to apply for this job.');
+        return route('login.form');
+    }
+}
+
+
+
 }

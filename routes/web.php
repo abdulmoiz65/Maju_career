@@ -6,6 +6,7 @@ use App\Http\Controllers\UserJobController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\AdminDashboardController;
 
 // ===== User Authentication =====
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
@@ -18,9 +19,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/admin', function () {
-    return view('admin.pages.index');
-});
+
+Route::get('/admin', [AdminDashboardController::class, 'index'])
+     ->name('admin.dashboard');
 
 // Career Job Routes
 Route::prefix('admin')->group(function () {

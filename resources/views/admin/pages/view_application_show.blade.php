@@ -74,27 +74,54 @@
                     {{ ucfirst(str_replace('_',' ', $application->job_type)) }} Applicant
                 </p>
 
-                @if(!$application->is_shortlisted)
-                <form method="POST"
-                      action="{{ route('admin.applications.shortlist', $application->id) }}"
-                      class="d-inline">
-                    @csrf
-                    <button class="btn btn-success btn-sm mt-2"
-                            onclick="return confirm('Shortlist this application?')">
-                        Add on Shortlist
-                    </button>
-                </form>
-            @else
-                <form method="POST"
-                      action="{{ route('admin.applications.unshortlist', $application->id) }}"
-                      class="d-inline">
-                    @csrf
-                    <button class="btn btn-info btn-sm mt-2"
-                            onclick="return confirm('Remove from shortlist?')">
-                        Remove from Shortlist
-                    </button>
-                </form>
-            @endif
+{{-- ✅ Action buttons --}}
+@if($application->is_shortlisted)
+    {{-- If already shortlisted: only show remove-from-shortlist --}}
+    <form method="POST"
+          action="{{ route('admin.applications.unshortlist', $application->id) }}"
+          class="d-inline">
+        @csrf
+        <button class="btn btn-info btn-sm mt-2"
+                onclick="return confirm('Remove from shortlist?')">
+            Remove from Shortlist
+        </button>
+    </form>
+
+@elseif($application->is_rejected)
+    {{-- If already rejected: only show remove-from-rejected --}}
+    <form method="POST"
+          action="{{ route('admin.applications.unreject', $application->id) }}"
+          class="d-inline">
+        @csrf
+        <button class="btn btn-warning btn-sm mt-2"
+                onclick="return confirm('Remove from rejected?')">
+            Remove from Rejected
+        </button>
+    </form>
+
+@else
+    {{-- If neither: show both options --}}
+    <form method="POST"
+          action="{{ route('admin.applications.shortlist', $application->id) }}"
+          class="d-inline">
+        @csrf
+        <button class="btn btn-success btn-sm mt-2"
+                onclick="return confirm('Shortlist this application?')">
+            Add to Shortlist
+        </button>
+    </form>
+
+    <form method="POST"
+          action="{{ route('admin.applications.reject', $application->id) }}"
+          class="d-inline">
+        @csrf
+        <button class="btn btn-danger btn-sm mt-2"
+                onclick="return confirm('Reject this application?')">
+            Reject Application
+        </button>
+    </form>
+@endif
+
 
 
             </div>

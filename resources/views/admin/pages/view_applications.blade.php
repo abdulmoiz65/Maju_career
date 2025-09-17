@@ -89,24 +89,45 @@
                 <td>{{ $app->salary_desired ?? '-' }}</td>
                 <td>{{ $app->created_at->format('d M, Y h:i A') }}</td>
                 <td>
-                  <a href="{{ route('admin.pages.view_application_show', $app->id) }}" class="btn btn-primary btn-sm">
-                    View
+                  <a href="{{ route('admin.pages.view_application_show', $app->id) }}"
+                     class="btn btn-primary btn-sm">
+                     View
                   </a>
-                  @if(!$app->is_shortlisted)
-    <form method="POST"
-          action="{{ route('admin.applications.shortlist', $app->id) }}"
-          class="d-inline">
-        @csrf
-        <button class="btn btn-success btn-sm"
-                onclick="return confirm('Shortlist this application?')">
-            Shortlist
-        </button>
-    </form>
-@else
-    <span class="badge bg-info">Shortlisted</span>
-@endif
-
-                </td>
+              
+                  {{-- === Decide which actions to show === --}}
+                  @if($app->is_shortlisted)
+                      {{-- Already shortlisted → show badge only --}}
+                      <span class="badge bg-info">Shortlisted</span>
+              
+                  @elseif($app->is_rejected)
+                      {{-- Already rejected → show badge only --}}
+                      <span class="badge bg-danger">Rejected</span>
+              
+                  @else
+                      {{-- Not yet decided → show BOTH possible actions --}}
+                      <form method="POST"
+                            action="{{ route('admin.applications.shortlist', $app->id) }}"
+                            class="d-inline">
+                          @csrf
+                          <button class="btn btn-success btn-sm"
+                                  onclick="return confirm('Shortlist this application?')">
+                              Shortlist
+                          </button>
+                      </form>
+              
+                      <form method="POST"
+                            action="{{ route('admin.applications.reject', $app->id) }}"
+                            class="d-inline">
+                          @csrf
+                          <button class="btn btn-danger btn-sm"
+                                  onclick="return confirm('Reject this application?')">
+                              Reject
+                          </button>
+                      </form>
+                  @endif
+              </td>
+              
+              
               </tr>
             @empty
               <tr>

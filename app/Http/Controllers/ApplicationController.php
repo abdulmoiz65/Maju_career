@@ -154,6 +154,49 @@ class ApplicationController extends Controller
             return view('admin.pages.shortlisted', compact('applications'));
         }
 
+
+        // reject application
+                public function reject($id)
+        {
+            $app = Application::findOrFail($id);
+            $app->update(['is_rejected' => 1]);
+            return back()->with('success', 'Application rejected successfully.');
+        }
+
+        
+        public function rejected(Request $request)
+{
+    $query = Application::where('is_rejected', 1);
+
+    if ($request->filled('q')) {
+        $q = $request->q;
+        $query->where(function($x) use ($q) {
+            $x->where('name', 'like', "%$q%")
+              ->orWhere('email', 'like', "%$q%")
+              ->orWhere('contact', 'like', "%$q%");
+        });
+    }
+
+    if ($request->filled('job_type')) {
+        $query->where('job_type', $request->job_type);
+    }
+
+    $applications = $query->latest()->paginate(10);
+
+    return view('admin.pages.rejected', compact('applications'));
+}
+
+
+public function unreject($id)
+{
+    $application = \App\Models\Application::findOrFail($id);
+    $application->is_rejected = false;
+    $application->save();
+
+    return redirect()->back()->with('success', 'Application removed from shortlist.');
+}
+
+
     
 public function create($jobId)
 {

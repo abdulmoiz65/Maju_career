@@ -22,8 +22,8 @@ return new class extends Migration
                 $table->text('postal_address')->nullable();
                 $table->string('city', 100)->nullable();
                 $table->tinyInteger('is_shortlisted')->default(0);
+                $table->tinyInteger('is_rejected')->default(0);    
                 $table->timestamps();
-
         });
     }
 

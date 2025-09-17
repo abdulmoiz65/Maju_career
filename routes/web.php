@@ -36,6 +36,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/applications/{id}/shortlist',[ApplicationController::class, 'shortlist'])->name('admin.applications.shortlist');
     Route::get('/applications/shortlisted', [ApplicationController::class, 'shortlisted'])->name('admin.pages.shortlisted');
     Route::post('/applications/{id}/unshortlist', [ApplicationController::class, 'unshortlist'])->name('admin.applications.unshortlist');
+    Route::post('/applications/{id}/reject',[ApplicationController::class, 'reject'])->name('admin.applications.reject');
+    Route::get('/applications/rejected',[ApplicationController::class, 'rejected'])->name('admin.pages.rejected');
+    Route::post('/applications/{id}/unreject',[ApplicationController::class, 'unreject'])->name('admin.applications.unreject');
+
 });
 
 

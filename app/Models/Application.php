@@ -20,7 +20,8 @@ class Application extends Model
         'salary_desired',
         'postal_address',
         'city',
-        'is_shortlisted'
+        'is_shortlisted',
+        'is_rejected',
     ];
 
     // Relationships

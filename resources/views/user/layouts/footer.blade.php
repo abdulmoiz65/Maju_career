@@ -22,6 +22,7 @@
         </div>
     </footer>
     <script src="{{ asset('js/modal.js') }}"></script>
+    <script src="{{asset('js/load_more.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

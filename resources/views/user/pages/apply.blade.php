@@ -11,14 +11,19 @@
         .form-section { border: 1px solid #e8e8e8; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
         .required:after { content: " *"; color: #d33; }
         .max-600 { max-width: 900px; }
+        .card {
+  border-radius: 0 !important;
+  position: relative !important;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+}
     </style>
 </head>
 <body>
 
+    <div class="card p-4">
+        <div class="d-flex justify-content-between align-items-start">
 
-
-
-<div class="container max-600 my-4">
+<div class="container max-600 ">
     <h2 class="mb-4 text-capitalize">Apply for {{ str_replace('_',' ', $job_type) }}</h2>
 
     <form action="{{ route('applications.store') }}" method="POST" enctype="multipart/form-data">
@@ -76,5 +81,11 @@
     </form>
 </div>
 
+        </div>
+    </div>
+
+
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </html>

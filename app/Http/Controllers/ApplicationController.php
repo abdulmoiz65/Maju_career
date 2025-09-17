@@ -149,7 +149,7 @@ class ApplicationController extends Controller
                 $query->where('job_type', $request->job_type);
             }
 
-            $applications = $query->paginate(10);
+            $applications = $query->paginate(12);
 
             return view('admin.pages.shortlisted', compact('applications'));
         }
@@ -198,7 +198,7 @@ public function index(Request $request)
     }
 
     // 📋 Paginate results
-    $applications = $query->orderBy('created_at', 'desc')->paginate(20);
+    $applications = $query->orderBy('created_at', 'desc')->paginate(12);
 
     return view('admin.pages.view_applications', compact('applications'));
 }

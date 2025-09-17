@@ -115,9 +115,11 @@
             @endforelse
           </tbody>
         </table>
+{{-- Pagination --}}
+<div class="mt-4">
+  {{ $applications->links('pagination::bootstrap-5') }}
+</div>
 
-        <!-- Pagination -->
-        {{ $applications->links() }}
       </div>
     </div>
   </div>

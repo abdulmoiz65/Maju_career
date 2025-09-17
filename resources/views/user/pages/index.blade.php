@@ -28,8 +28,8 @@
             <h1 class="text-center text-muted">No jobs available at the moment.</h1>
         </div>
     @else
-        @foreach($jobs as $job)
-          <div class="col-lg-4 col-md-6">
+        @foreach($jobs as $index => $job)
+        <div class="col-lg-4 col-md-6 job-card-wrapper {{ $index >= 6 ? 'd-none' : '' }}">
             <div class="job-card">
               <div class="job-status {{ $job->status === 'Active' ? 'status-active' : 'status-inactive' }}">
                 {{ $job->status }}
@@ -70,6 +70,19 @@
         @endforeach
     @endif
       </div>
+
+      @if(!$jobs->isEmpty())
+      <div class="text-center mt-5">
+        <button id="loadMoreBtn" 
+                class=" btn btn-search "
+                style="border-radius: 50px; background-color: #0066ff; border: none;">
+          <i class="fas fa-plus-circle me-2"></i> Load More Jobs
+        </button>
+      </div>
+    @endif
+    
+
+
     </div>
   </section>
 

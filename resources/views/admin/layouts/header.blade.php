@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Admin</title>
+    <title>Career Portal - Admin</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -176,7 +176,24 @@
               </div>
             </li>
 
-        
+             <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#hr" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Portal Admins</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              </a>
+              <div class="collapse" id="hr">
+                <ul class="nav flex-column sub-menu">
+                
+                  <li class="nav-item">
+                    <a class="nav-link" href="">View admins</a>
+                  </li>
+                 
+
+                </ul>
+              </div>
+            </li>
+
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span class="menu-title">Documentation</span>

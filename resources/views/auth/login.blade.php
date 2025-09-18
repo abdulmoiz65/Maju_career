@@ -52,9 +52,9 @@
               <a href="{{ route('google.redirect') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2">
                 <i class="fab fa-google"></i> Sign in with Google
               </a>
-              <a href="{{ url('/auth/microsoft') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2">
+              {{-- <a href="{{ url('/auth/microsoft') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2">
                 <i class="fab fa-microsoft"></i> Sign in with Microsoft
-              </a>
+              </a> --}}
             </div>
 
             <div class="position-relative text-center mb-4">

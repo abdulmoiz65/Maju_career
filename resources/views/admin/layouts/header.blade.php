@@ -99,13 +99,16 @@
                 </div>
                 <i class=" m-3 fa-solid fa-caret-down"></i>
               </a>
-              <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-cached me-2 text-success"></i> Activity Log </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="">
-                  <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
-              </div>
+<div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+    <form action="{{ route('admin.logout') }}" method="POST">
+        @csrf
+        <button class="dropdown-item" type="submit">
+            <i class="mdi mdi-logout me-2 text-primary"></i> Signout
+        </button>
+    </form>
+</div>
+
+
             </li>
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">

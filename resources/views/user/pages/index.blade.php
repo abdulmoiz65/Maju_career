@@ -11,14 +11,6 @@
   
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h5>Showing {{ $jobs->count() }} jobs</h5>
-        <div class="d-flex align-items-center gap-2">
-          <label for="sortJobs" class="form-label mb-0">Sort by:</label>
-          <select id="sortJobs" class="form-select w-auto" style="padding-right: 2rem;">
-            <option>Newest First</option>
-            <option>Oldest First</option>
-            <option>Job Title</option>
-          </select>
-        </div>
       </div>
   
       <!-- Job Cards Row -->
@@ -71,7 +63,7 @@
     @endif
       </div>
 
-      @if(!$jobs->isEmpty())
+      @if(!$jobs->isEmpty() && $jobs->count() > 6)
       <div class="text-center mt-5">
         <button id="loadMoreBtn" 
                 class=" btn btn-search "

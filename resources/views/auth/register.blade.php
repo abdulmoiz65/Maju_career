@@ -65,9 +65,9 @@
       </button>
     </form>
 
-    <button class="google-btn w-100 mb-3">
-      <i class="fab fa-google"></i> Sign Up with Google
-    </button>
+  <a href="{{ route('google.redirect') }}" class="btn btn-outline-secondary rounded-pill d-flex align-items-center justify-content-center gap-2">
+    <i class="fab fa-google"></i> Sign in with Google
+  </a>
 
     <div class="login-link">
       Already have an account?

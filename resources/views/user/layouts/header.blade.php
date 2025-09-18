@@ -10,53 +10,43 @@
     <script src="{{asset('js/auto_hide.js')}}"></script>
 </head>
 <body>
-    <!-- Navigation -->
-<nav class="navbar navbar-expand-lg sticky-top">
+<!-- Navigation -->
+<nav class="navbar sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#">
             <img src="{{ asset('images/logofavwhite.png') }}" alt="MAJU Logo" class="me-2" style="height: 60px;">
             MAJU Career
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="ms-auto d-flex align-items-center">
+            {{-- When user is **not** logged in --}}
+            @guest
+                <a href="{{ route('login.form') }}" class="btn btn-login">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </a>
+            @endguest
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="ms-auto d-flex align-items-center">
-
-                {{-- When user is **not** logged in --}}
-                @guest
-                    <a href="{{ route('login.form') }}" class="btn btn-login">
-                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                    </a>
-                @endguest
-
-                {{-- When user **is** logged in --}}
-                @auth
-                    <div class="dropdown">
-                        <button class="btn btn-info dropdown-toggle" type="button"
-                                id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user-circle me-1"></i>
-                            {{ auth()->user()->first_name ?? auth()->user()->email ?? '' }}
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                            {{-- <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li> --}}
-                            {{-- <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li> --}}
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button class="dropdown-item" type="submit">
-                                        <i class="fas fa-sign-out-alt me-1"></i>Logout
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                @endauth
-
-            </div>
+            {{-- When user **is** logged in --}}
+            @auth
+                <div class="dropdown">
+                    <button class="btn btn-login dropdown-toggle" type="button"
+                            id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-circle me-1"></i>
+                        {{ auth()->user()->first_name ?? auth()->user()->email ?? '' }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button class="dropdown-item" type="submit">
+                                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            @endauth
         </div>
     </div>
 </nav>
@@ -100,7 +90,7 @@
                             <input type="text" class="form-control" name="search" placeholder="Job title, keywords...">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                         <select class="form-select" name="job_type">
                             <option value="">All Job Types</option>
                             <option value="faculty">Faculty</option>
@@ -108,7 +98,7 @@
                             <option value="staff">Staff</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <select class="form-select" name="department">
                             <option value="">All Departments</option>
                             <option value="cs">Computer Science</option>
@@ -117,8 +107,8 @@
                             <option value="arts">Arts & Design</option>
                             <option value="social">Social Sciences</option>
                         </select>
-                    </div>
-                    <div class="col-md-2">
+                    </div> --}}
+                    <div class="col-md-3">
                         <button type="submit" class="btn btn-search w-100">
                             <i class="fas fa-search me-2"></i>Search
                         </button>
@@ -134,28 +124,31 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="stat-item">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">Active Job Openings</div>
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Staff Members</div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="stat-item">
-                        <div class="stat-number">500+</div>
+                        <div class="stat-number">150+</div>
                         <div class="stat-label">Faculty Members</div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="stat-item">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label">Departments</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
+
+                 <div class="col-md-3">
                     <div class="stat-item">
                         <div class="stat-number">25+</div>
                         <div class="stat-label">Years of Excellence</div>
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Programs</div>
+                    </div>
+                </div>
+               
             </div>
         </div>
     </section>

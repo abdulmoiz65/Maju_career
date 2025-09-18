@@ -22,7 +22,7 @@ body {
 
 /* Header */
 .navbar {
-      background: linear-gradient(135deg,#4f46e5,#1e3a8a);
+    background: linear-gradient(135deg,#4f46e5,#1e3a8a);
     padding: 1rem 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
@@ -31,6 +31,12 @@ body {
     font-size: 1.8rem;
     font-weight: bold;
     color: white !important;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
 }
 
 .navbar-nav .nav-link {

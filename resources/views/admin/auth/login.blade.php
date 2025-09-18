@@ -24,7 +24,7 @@
             <form class="pt-3" method="POST" action="{{ route('admin.login.submit') }}">
               @csrf
               <div class="form-group">
-                <input type="email" name="email" class="form-control form-control-lg"
+                <input  name="email" class="form-control form-control-lg"
                        placeholder="Email" value="{{ old('email') }}" required autofocus>
               </div>
               <div class="form-group">

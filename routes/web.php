@@ -35,13 +35,15 @@ Route::prefix('admin')->middleware('admin.auth')->group(function () {
     Route::delete('/jobs/{id}', [CareerJobController::class, 'destroy'])->name('jobs.destroy');
 
     Route::get('/applications', [ApplicationController::class, 'index'])->name('admin.pages.view_applications');
+    Route::get('/applications/shortlisted', [ApplicationController::class, 'shortlisted'])->name('admin.pages.shortlisted');
+    Route::get('/applications/rejected',[ApplicationController::class, 'rejected'])->name('admin.pages.rejected');
     Route::get('/applications/{id}', [ApplicationController::class,'show'])->name('admin.pages.view_application_show');
     Route::post('/applications/{id}/shortlist',[ApplicationController::class, 'shortlist'])->name('admin.applications.shortlist');
-    Route::get('/applications/shortlisted', [ApplicationController::class, 'shortlisted'])->name('admin.pages.shortlisted');
     Route::post('/applications/{id}/unshortlist', [ApplicationController::class, 'unshortlist'])->name('admin.applications.unshortlist');
     Route::post('/applications/{id}/reject',[ApplicationController::class, 'reject'])->name('admin.applications.reject');
-    Route::get('/applications/rejected',[ApplicationController::class, 'rejected'])->name('admin.pages.rejected');
     Route::post('/applications/{id}/unreject',[ApplicationController::class, 'unreject'])->name('admin.applications.unreject');
+    Route::post('/applications/download-resumes', [ApplicationController::class, 'downloadResumes'])->name('admin.applications.downloadResumes');
+
 });
 
 

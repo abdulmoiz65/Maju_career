@@ -177,12 +177,12 @@
             </li>
 
              <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#hr" aria-expanded="false" aria-controls="ui-basic">
+              <a class="nav-link" data-bs-toggle="collapse" href="#admin" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Portal Admins</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-crosshairs-gps menu-icon"></i>
               </a>
-              <div class="collapse" id="hr">
+              <div class="collapse" id="admin">
                 <ul class="nav flex-column sub-menu">
                 
                   <li class="nav-item">

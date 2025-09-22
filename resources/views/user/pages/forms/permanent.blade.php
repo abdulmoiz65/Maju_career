@@ -3,6 +3,9 @@
 <h4 class="mt-4">Permanent Faculty Details</h4>
 
 {{-- Highest Degree --}}
+
+<div class="form-section">
+    <h6 class="mb-3">Education</h6>
 <div class="mb-3">
     <label class="form-label d-block">Highest Degree <span class="text-danger">*</span></label>
     @foreach(['phd' => 'PhD', 'masters18' => 'Masters (18 Years)', 'masters16' => 'Masters (16 Years)', 'bachelors' => 'Bachelors', 'other' => 'Other'] as $value => $label)
@@ -13,25 +16,62 @@
     @endforeach
 </div>
 
+
+<div class="row">
+{{-- Institute --}}
+<div class="col-md-6">
+<div class="mb-3">
+    <label class="form-label">Name of Institute</label>
+    <input type="text" name="institute" class="form-control" value="{{ old('institute') }}">
+</div>
+</div>
+
+
+{{-- Passing Year --}}
+<div class="col-md-6">
+<div class="mb-3">
+    <label class="form-label">Passing Year</label>
+    <input type="number" name="passing_year" class="form-control" min="1950" max="{{ date('Y') }}" value="{{ old('passing_year') }}">
+</div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        {{-- Postal Address --}}
+<div class="mb-3">
+    <label class="form-label">Postal Address</label>
+    <textarea name="postal_address" class="form-control" rows="2">{{ old('postal_address') }}</textarea>
+</div>
+
+    </div>
+
+    <div class="col-md-6">
+        {{-- Current City --}}
+<div class="mb-3">
+    <label class="form-label">Current City</label>
+    <input type="text" name="city" class="form-control" value="{{ old('city') }}">
+</div>
+    </div>
+
+</div>
+
+
+
 {{-- Area of Specialization --}}
 <div class="mb-3">
     <label class="form-label">Area of Specialization</label>
     <input type="text" name="specialization" class="form-control" value="{{ old('specialization') }}">
 </div>
 
-{{-- Institute --}}
-<div class="mb-3">
-    <label class="form-label">Name of Institute</label>
-    <input type="text" name="institute" class="form-control" value="{{ old('institute') }}">
+</div>
 </div>
 
-{{-- Passing Year --}}
-<div class="mb-3">
-    <label class="form-label">Passing Year</label>
-    <input type="number" name="passing_year" class="form-control" min="1950" max="{{ date('Y') }}" value="{{ old('passing_year') }}">
-</div>
 
-{{-- Post Applied --}}
+<div class="form-section">
+    <h6 class="mb-3">Department & Post</h6>
+
+    <div class="row">
+        {{-- Post Applied --}}
 <div class="mb-3">
     <label class="form-label d-block">Post Applied For <span class="text-danger">*</span></label>
     @foreach(['professor' => 'Professor', 'associate_professor' => 'Associate Professor', 'assistant_professor' => 'Assistant Professor', 'lecturer' => 'Lecturer', 'instructor' => 'Instructor', 'lab_engineer' => 'Lab Engineer'] as $value => $label)
@@ -43,35 +83,45 @@
     @endforeach
 </div>
 
-{{-- Organization Recent --}}
-<div class="mb-3">
-    <label class="form-label">Name of Organization (Recent)</label>
-    <input type="text" name="org_recent" class="form-control" value="{{ old('org_recent') }}">
-</div>
+    </div>
 
-{{-- Designation Recent --}}
-<div class="mb-3">
-    <label class="form-label">Designation (Recent)</label>
-    <input type="text" name="designation_recent" class="form-control" value="{{ old('designation_recent') }}">
-</div>
-
-{{-- Salary Desired --}}
+    
+        {{-- Salary Desired --}}
 <div class="mb-3">
     <label class="form-label">Salary Desired</label>
     <input type="text" name="salary_desired" class="form-control" value="{{ old('salary_desired') }}">
 </div>
 
-{{-- Postal Address --}}
-<div class="mb-3">
-    <label class="form-label">Postal Address</label>
-    <textarea name="postal_address" class="form-control" rows="2">{{ old('postal_address') }}</textarea>
+
 </div>
 
-{{-- Current City --}}
-<div class="mb-3">
-    <label class="form-label">Current City</label>
-    <input type="text" name="city" class="form-control" value="{{ old('city') }}">
+
+{{-- Employment History (Recent) --}}
+
+<div class="form-section">
+    <h6 class="mb-3">Employment History (Recent) </h6>
+
+<div class="row">
+
+    <div class="col-md-6">
+        {{-- Organization Recent --}}
+    <div class="mb-3">
+    <label class="form-label">Name of Organization (Recent)</label>
+    <input type="text" name="org_recent" class="form-control" value="{{ old('org_recent') }}">
+    </div>
+    </div>
+
+    <div class="col-md-6">
+    {{-- Designation Recent --}}
+    <div class="mb-3">
+        <label class="form-label">Designation (Recent)</label>
+        <input type="text" name="designation_recent" class="form-control" value="{{ old('designation_recent') }}">
+    </div>
+    </div>
+
 </div>
+</div>
+
 
 {{-- Attachments --}}
 

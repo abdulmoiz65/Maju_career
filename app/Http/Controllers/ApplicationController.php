@@ -8,6 +8,8 @@ use App\Models\VisitingFaculty;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Models\CareerJob;
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class ApplicationController extends Controller
 {
@@ -154,6 +156,32 @@ class ApplicationController extends Controller
             return view('admin.pages.shortlisted', compact('applications'));
         }
 
+        public function downloadResumes(Request $request)
+{
+    $ids = $request->applications;
+
+    if (!$ids || count($ids) == 0) {
+        return back()->with('error', 'Please select at least one application.');
+    }
+
+    $applications = \App\Models\Application::whereIn('id', $ids)->get();
+
+    $zip = new ZipArchive;
+    $zipFileName = 'resumes_' . now()->format('Ymd_His') . '.zip';
+    $zipPath = storage_path('app/public/uploads/' . $zipFileName);
+
+    if ($zip->open($zipPath, ZipArchive::CREATE) === TRUE) {
+        foreach ($applications as $app) {
+            if ($app->resume && Storage::disk('public')->exists("uploads/resumes/{$app->resume}")) {
+                $filePath = storage_path("app/public/uploads/resumes/{$app->resume}");
+                $zip->addFile($filePath, $app->name . '_' . $app->resume);
+            }
+        }
+        $zip->close();
+    }
+
+    return response()->download($zipPath)->deleteFileAfterSend(true);
+}
 
         // reject application
                 public function reject($id)

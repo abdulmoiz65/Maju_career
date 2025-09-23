@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\CareerJob;
+use Illuminate\Http\Request;
 
 class UserJobController extends Controller
 {
     public function index()
-    {
-        // Fetch all jobs (active or inactive)
-        $jobs = CareerJob::latest()->get();
+{
+    $query = CareerJob::query()->latest();
 
-        return view('user.pages.index', compact('jobs'));
+    // Apply filter if job_type is selected
+    if (request()->filled('job_type')) {
+        $query->where('job_type', request('job_type'));
     }
+
+    $jobs = $query->get();
+
+    return view('user.pages.index', compact('jobs'));
+}
+
 }

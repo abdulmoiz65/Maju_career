@@ -45,9 +45,10 @@
                           @json($job->title),
                           @json("Mohammad Ali Jinnah University"),
                           @json($job->job_type),
-                          @json(Str::limit($job->description, 1500)),
+                          @json(Str::limit($job->description, 2500)),
                           @json(rand(10,80)),
                           @json($job->contact ?? "careers@jinnah.edu"),
+                          @json($job->status),
                           @json($job->created_at->diffForHumans())
                       )'>
                       <i class="fas fa-eye me-2"></i> View Detail

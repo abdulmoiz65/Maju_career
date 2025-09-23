@@ -79,46 +79,7 @@
         </div>
     </section>
 
-    <!-- Search Section -->
-    <section class="search-section">
-        <div class="container">
-            <form class="search-form" action="#" method="GET">
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                            <input type="text" class="form-control" name="search" placeholder="Job title, keywords...">
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <select class="form-select" name="job_type">
-                            <option value="">All Job Types</option>
-                            <option value="faculty">Faculty</option>
-                            <option value="visiting">Visiting Faculty</option>
-                            <option value="staff">Staff</option>
-                        </select>
-                    </div>
-                    {{-- <div class="col-md-3">
-                        <select class="form-select" name="department">
-                            <option value="">All Departments</option>
-                            <option value="cs">Computer Science</option>
-                            <option value="business">Business Administration</option>
-                            <option value="engineering">Engineering</option>
-                            <option value="arts">Arts & Design</option>
-                            <option value="social">Social Sciences</option>
-                        </select>
-                    </div> --}}
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-search w-100">
-                            <i class="fas fa-search me-2"></i>Search
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
+        <!-- Stats Section -->
     <section class="stats">
         <div class="container">
             <div class="row">
@@ -152,3 +113,31 @@
             </div>
         </div>
     </section>
+
+
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+          <form method="GET" action="{{ route('user.index') }}" class="search-form">
+    <div class="row g-3">
+        <div class="col-md-8">
+            <select class="form-select" name="job_type" onchange="this.form.submit()">
+                <option value="">All Job Types</option>
+                <option value="permanent_faculty" {{ request('job_type') == 'permanent_faculty' ? 'selected' : '' }}>Permanent Faculty</option>
+                <option value="visiting_faculty" {{ request('job_type') == 'visiting_faculty' ? 'selected' : '' }}>Visiting Faculty</option>
+                <option value="staff" {{ request('job_type') == 'staff' ? 'selected' : '' }}>Staff</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-search w-100">
+                <i class="fas fa-search me-2"></i>Search
+            </button>
+        </div>
+    </div>
+</form>
+
+
+        </div>
+    </section>
+

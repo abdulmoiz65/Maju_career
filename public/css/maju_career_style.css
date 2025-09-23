@@ -249,7 +249,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
     color: var(--text-light);
     font-size: 0.85rem;
     flex-grow: 1;
@@ -265,7 +265,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto;
+    margin-top: 0;
 }
 
 .btn-apply {

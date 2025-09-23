@@ -3,7 +3,7 @@
         <div class="container">
             <div class="footer-content">
                 <h5><img src="{{asset('images/logofavwhite.png')}}" alt="MAJU Logo" class="me-2" style="height: 60px;">MAJU Career</h5>
-                <div class="footer-links">
+                {{-- <div class="footer-links">
                     <a href="#about">About Us</a>
                     <a href="#contact">Contact</a>
                     <a href="#privacy">Privacy Policy</a>
@@ -14,7 +14,7 @@
                     <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
                     <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                </div>
+                </div> --}}
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Mohammad Ali Jinnah University. All rights reserved.</p>

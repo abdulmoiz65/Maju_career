@@ -31,6 +31,7 @@ class GoogleController extends Controller
                     'last_name'  => $lastName,
                     'password'   => bcrypt(Str::random(16)),
                     'google_id'  => $googleUser->getId(),
+                    'email_verified_at'=> now(),
                 ]
             );
 
@@ -39,8 +40,10 @@ class GoogleController extends Controller
             return redirect()->route('user.index')
                              ->with('success', 'Logged in with Google successfully!');
         } catch (Exception $e) {
-            return redirect()->route('login.form')
-                             ->with('error', 'Google login failed. Please try again.');
-        }
+    \Log::error('Google login error: '.$e->getMessage(), ['trace' => $e->getTraceAsString()]);
+    return redirect()->route('login.form')
+                     ->with('error', 'Google login failed: ' . $e->getMessage());
+}
+
     }
 }

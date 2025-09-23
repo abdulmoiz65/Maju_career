@@ -8,6 +8,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminAuthController;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 
 // ===== User Authentication =====
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register.form');
@@ -17,6 +20,22 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+// EMAIL VERIFICATION 
+Route::get('/email/verify', function () {
+    return view('auth.verify-email'); // make this blade
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill(); // updates email_verified_at
+    return redirect()->route('user.index')->with('success', 'Email verified!');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 Route::prefix('admin')->group(function () {
@@ -53,7 +72,7 @@ Route::get('/', [UserJobController::class, 'index'])->name('user.index');
 // Route::get('/admin/applications/{id}', [ApplicationController::class,'show'])
 //      ->name('admin.applications.show');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/apply/{job}', [ApplicationController::class, 'create'])->name('applications.create');
     Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
 });

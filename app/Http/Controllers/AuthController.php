@@ -31,8 +31,9 @@ class AuthController extends Controller
     ]);
     // Optionally log in immediately
     Auth::login($user);
+    $user->sendEmailVerificationNotification();
 
-    return redirect()->route('user.index')->with('success', 'Welcome aboard!');
+    return redirect()->route('verification.notice')->with('success', 'We sent a verification link to your email. Please verify before applying.');
     }
 
 public function showLogin()
@@ -40,23 +41,33 @@ public function showLogin()
     return view('auth.login');
 }
 
-    public function login(Request $request) {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+    public function login(Request $request)
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-        if (Auth::attempt($credentials, $request->remember)) {
-            $request->session()->regenerate();
-            return redirect()->route('user.index');
+    if (Auth::attempt($credentials, $request->remember)) {
+        $request->session()->regenerate();
 
+        $user = Auth::user();
 
+        // ✅ If user registered manually AND has not verified email → block
+        if (is_null($user->google_id) && !$user->hasVerifiedEmail()) {
+            Auth::logout();
+            return redirect()->route('verification.notice')
+                ->with('error', 'You must verify your email before logging in.');
         }
 
-        return back()->withErrors([
-            'email' => 'Invalid credentials provided.',
-        ]);
+        return redirect()->route('user.index');
     }
+
+    return back()->withErrors([
+        'email' => 'Invalid credentials provided.',
+    ]);
+}
+
 
  public function logout(Request $request)
 {

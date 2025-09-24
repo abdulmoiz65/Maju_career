@@ -41,30 +41,46 @@ public function showLogin()
     return view('auth.login');
 }
 
-    public function login(Request $request)
+public function login(Request $request)
 {
-    $credentials = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
+    $request->validate([
+        'email'    => 'required|email',
+        'password' => 'required|string',
     ]);
 
-    if (Auth::attempt($credentials, $request->remember)) {
+    // Find the user first
+    $user = User::where('email', $request->email)->first();
+
+    if (! $user) {
+        return back()->withErrors([
+            'email' => 'We can’t find an account with that email address.',
+        ])->onlyInput('email');
+    }
+
+    if (! Hash::check($request->password, $user->password)) {
+      
+        return back()->withErrors([
+            'password' => 'The password you entered is incorrect.',
+        ])->onlyInput('email'); 
+    }
+
+    if (Auth::attempt($request->only('email','password'), $request->boolean('remember'))) {
         $request->session()->regenerate();
 
-        $user = Auth::user();
-
-        // ✅ If user registered manually AND has not verified email → block
-        if (is_null($user->google_id) && !$user->hasVerifiedEmail()) {
+        // Email verification check
+        if (is_null($user->google_id) && ! $user->hasVerifiedEmail()) {
             Auth::logout();
             return redirect()->route('verification.notice')
                 ->with('error', 'You must verify your email before logging in.');
         }
 
-        return redirect()->route('user.index');
+        return redirect()->intended(route('user.index'))
+                         ->with('success', 'Welcome back, '.$user->first_name.'!');
     }
 
+    // Fallback (should rarely hit)
     return back()->withErrors([
-        'email' => 'Invalid credentials provided.',
+        'email' => 'Login failed. Please try again.',
     ]);
 }
 

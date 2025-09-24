@@ -139,11 +139,14 @@
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                     <a id="applyLink"
-   href="{{ auth()->check() ? route('applications.create', $job->id) : route('login.form') }}"
-   class="btn btn-apply-modal">
-   <i class="fas fa-paper-plane me-2"></i> Apply Now
-</a>
+@if($jobs->isNotEmpty())
+    <a id="applyLink"
+       href="{{ auth()->check() ? route('applications.create', $jobs->first()->id) : route('login.form') }}"
+       class="btn btn-apply-modal">
+       <i class="fas fa-paper-plane me-2"></i> Apply Now
+    </a>
+@endif
+
 
                   </div>
 

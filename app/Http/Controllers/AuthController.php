@@ -85,14 +85,20 @@ public function login(Request $request)
 }
 
 
- public function logout(Request $request)
+public function logout(Request $request)
 {
-    Auth::logout();
+    try {
+        Auth::logout();
+    } catch (\Exception $e) {
+        // already logged out or session missing
+    }
+
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect()->route('login.form');
+    return redirect()->route('login.form')->with('success', 'You have been logged out.');
 }
+
 
 protected function redirectTo($request)
 {

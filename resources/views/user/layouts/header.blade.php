@@ -37,12 +37,12 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button class="dropdown-item" type="submit">
-                                    <i class="fas fa-sign-out-alt me-1"></i>Logout
-                                </button>
-                            </form>
+                           <form action="{{ route('logout') }}" method="POST" onsubmit="this.querySelector('button').disabled=true;">
+                            @csrf
+                            <button class="dropdown-item" type="submit">
+                                <i class="fas fa-sign-out-alt me-1"></i> Logout
+                            </button>
+                        </form>
                         </li>
                     </ul>
                 </div>

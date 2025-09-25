@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('maju_career_applications', function (Blueprint $table) {
                 $table->id();
+                $table->foreignId('career_job_id')->constrained('career_jobs')->onDelete('cascade');
                 $table->enum('job_type', ['permanent_faculty','visiting_faculty','staff']);
                 $table->string('name');
                 $table->string('contact', 50);

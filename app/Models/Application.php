@@ -12,6 +12,7 @@ class Application extends Model
     protected $table = 'maju_career_applications';
 
     protected $fillable = [
+        'career_job_id',
         'job_type',
         'name',
         'contact',
@@ -39,4 +40,9 @@ class Application extends Model
     {
         return $this->hasOne(Staff::class, 'application_id');
     }
+    public function job()
+    {
+    return $this->belongsTo(CareerJob::class, 'career_job_id');
+    }
+
 }

@@ -29,6 +29,7 @@
     <form action="{{ route('applications.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="job_type" value="{{ $job_type }}">
+        <input type="hidden" name="career_job_id" value="{{ $job->id }}">
 
         {{-- 🔹 Common Fields --}}
         <div class="form-section">

@@ -17,6 +17,7 @@ class ApplicationController extends Controller
     {
         // Step 1: Create the base application
         $application = Application::create([
+            'career_job_id' => $request->career_job_id,
             'job_type' => $request->job_type,
             'name' => $request->name,
             'contact' => $request->contact,

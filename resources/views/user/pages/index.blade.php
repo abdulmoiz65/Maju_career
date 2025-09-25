@@ -33,7 +33,7 @@
               </div>
               <div class="job-meta">
                 <span><i class="fas fa-map-marker-alt"></i> Karachi, Pakistan</span>
-                <span><i class="fas fa-users"></i> {{ rand(10,80) }} applications</span> 
+                <span><i class="fas fa-users"></i> {{ $job->applications_count }} applications</span> 
                 {{-- Fake for now --}}
               </div>
   
@@ -46,7 +46,7 @@
                           @json("Mohammad Ali Jinnah University"),
                           @json($job->job_type),
                           @json(Str::limit($job->description, 2500)),
-                          @json(rand(10,80)),
+                          @json($job->applications_count),
                           @json($job->contact ?? "careers@jinnah.edu"),
                           @json($job->status),
                           @json($job->created_at->diffForHumans())

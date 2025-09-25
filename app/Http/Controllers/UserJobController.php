@@ -17,6 +17,8 @@ class UserJobController extends Controller
     }
 
     $jobs = $query->get();
+    $jobs = CareerJob::withCount('applications')->get();
+
 
     return view('user.pages.index', compact('jobs'));
 }

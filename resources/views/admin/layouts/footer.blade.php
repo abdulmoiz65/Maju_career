@@ -18,5 +18,11 @@
     <!-- plugins:js -->
     <script src="{{ asset('js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('js/misc.js') }}"></script>
+    <script>
+  setTimeout(() => {
+    document.querySelectorAll(".alert").forEach(el => el.remove());
+  }, 4000);
+</script>
+
   </body>
 </html>

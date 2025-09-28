@@ -175,24 +175,26 @@
                 </ul>
               </div>
             </li>
-{{-- 
-             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#admin" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Portal Admins</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-              </a>
-              <div class="collapse" id="admin">
-                <ul class="nav flex-column sub-menu">
-                
-                  <li class="nav-item">
-                    <a class="nav-link" href="">View admins</a>
-                  </li>
-                 
 
-                </ul>
-              </div>
-            </li> --}}
+            @auth('admin')
+              @if(auth('admin')->user()->role === 'super_admin')
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#admin" aria-expanded="false" aria-controls="ui-basic">
+                    <span class="menu-title">Portal Admins</span>
+                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                  </a>
+                  <div class="collapse" id="admin">
+                    <ul class="nav flex-column sub-menu">
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin.pages.create_admin')}}">Create admins</a>
+                        <a class="nav-link" href="{{route('admin.pages.view_admin')}}">View admins</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              @endif
+            @endauth
 
             <li class="nav-item">
               <a class="nav-link" href="#">

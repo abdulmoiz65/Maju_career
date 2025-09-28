@@ -1,6 +1,19 @@
 @include('admin.layouts.header')
 
 <div class="content-wrapper p-4">
+
+  @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('success') }}
+    </div>
+  @endif
+
+  @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ session('error') }}
+    </div>
+  @endif
+
   <div class="bg-primary p-4 text-white mb-4 rounded shadow-sm">
     <h4 class="mb-0">Welcome, </h4>
     <small>Admin Dashboard Overview</small>

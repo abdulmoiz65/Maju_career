@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\ManageAdminController; 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -47,6 +48,16 @@ Route::prefix('admin')->group(function () {
 // Career Job Routes
 Route::prefix('admin')->middleware('admin.auth')->group(function () {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    
+    Route::middleware('super.admin')->group(function () {
+        Route::get('/View-admins', [ManageAdminController::class, 'index'])->name('admin.pages.view_admin');
+        Route::get('/create-admin', [ManageAdminController::class, 'create'])->name('admin.pages.create_admin');
+        Route::post('/store-admin', [ManageAdminController::class, 'store'])->name('admin.pages.store_admin');
+        Route::get('/edit-admin/{id}', [ManageAdminController::class, 'edit'])->name('admin.pages.edit_admin');
+        Route::put('/update-admin/{id}', [ManageAdminController::class, 'update'])->name('admin.pages.update_admin');
+        Route::delete('/delete/{id}', [ManageAdminController::class, 'destroy'])->name('admins.destroy');
+    });
+
     Route::get('/create-job', [CareerJobController::class, 'create'])->name('jobs.create');
     Route::post('/store-job', [CareerJobController::class, 'store'])->name('jobs.store');
     Route::get('/jobs', [CareerJobController::class, 'index'])->name('jobs.index');

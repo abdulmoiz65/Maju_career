@@ -56,7 +56,7 @@ class PasswordResetController extends Controller
             session(['password_reset_email' => $email]);
 
             return redirect()->route('password.otpForm')
-                             ->with('success', 'OTP sent to your email. It will expire in 10 minutes.');
+                             ->with('success', 'OTP sent to your email.');
         } catch (\Exception $e) {
             Log::error('Error sending OTP: ' . $e->getMessage(), ['trace' => $e->getTrace()]);
             return back()->withErrors(['email' => 'Unable to send OTP at this time. Please try again later.']);

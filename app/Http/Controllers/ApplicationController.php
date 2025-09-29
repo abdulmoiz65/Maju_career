@@ -8,6 +8,7 @@ use App\Models\VisitingFaculty;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Models\CareerJob;
+
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
@@ -159,7 +160,7 @@ class ApplicationController extends Controller
             return view('admin.pages.shortlisted', compact('applications'));
         }
 
-        public function downloadResumes(Request $request)
+public function downloadResumes(Request $request)
 {
     $ids = $request->applications;
 
@@ -167,24 +168,45 @@ class ApplicationController extends Controller
         return back()->with('error', 'Please select at least one application.');
     }
 
-    $applications = \App\Models\Application::whereIn('id', $ids)->get();
+    $applications = Application::whereIn('id', $ids)->get();
 
-    $zip = new ZipArchive;
+    $zip = new \ZipArchive;
     $zipFileName = 'resumes_' . now()->format('Ymd_His') . '.zip';
     $zipPath = storage_path('app/public/uploads/' . $zipFileName);
 
-    if ($zip->open($zipPath, ZipArchive::CREATE) === TRUE) {
-        foreach ($applications as $app) {
-            if ($app->resume && Storage::disk('public')->exists("uploads/resumes/{$app->resume}")) {
-                $filePath = storage_path("app/public/uploads/resumes/{$app->resume}");
-                $zip->addFile($filePath, $app->name . '_' . $app->resume);
-            }
-        }
-        $zip->close();
+    // Ensure uploads dir exists
+    if (!file_exists(dirname($zipPath))) {
+        mkdir(dirname($zipPath), 0755, true);
     }
 
-    return response()->download($zipPath)->deleteFileAfterSend(true);
+    if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+        foreach ($applications as $app) {
+            if ($app->resume && \Storage::disk('public')->exists("uploads/resume/{$app->resume}")) {
+                $filePath = storage_path("app/public/uploads/resume/{$app->resume}");
+
+                // Sanitize name + prevent duplicates
+                $safeName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $app->name);
+                $newFileName = $safeName . '_' . $app->id . '.' . pathinfo($app->resume, PATHINFO_EXTENSION);
+
+                $zip->addFile($filePath, $newFileName);
+            }
+        }
+
+        $zip->close();
+
+        // If empty ZIP
+        if (!file_exists($zipPath) || filesize($zipPath) === 0) {
+            @unlink($zipPath);
+            return back()->with('error', 'No valid resumes found.');
+        }
+
+        return response()->download($zipPath)->deleteFileAfterSend(true);
+    }
+
+    return back()->with('error', 'Could not create ZIP file. Please try again.');
 }
+
+
 
         // reject application
                 public function reject($id)
@@ -195,6 +217,7 @@ class ApplicationController extends Controller
         }
 
         
+
         public function rejected(Request $request)
 {
     $query = Application::where('is_rejected', 1);

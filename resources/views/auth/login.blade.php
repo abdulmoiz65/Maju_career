@@ -92,7 +92,7 @@
             </form>
 
             <div class="d-flex justify-content-between mt-3 small">
-              <a href="" class="text-decoration-none">Forgot Password?</a>
+              <a href="{{route('password.forgot')}}" class="text-decoration-none">Forgot Password?</a>
               <a href="{{ route('register.form') }}" class="text-decoration-none">Sign up</a>
             </div>
 

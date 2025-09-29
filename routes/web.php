@@ -9,6 +9,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ManageAdminController; 
+use App\Http\Controllers\PasswordResetController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -23,6 +24,14 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/logout', function () {return redirect()->route('login.form');});
 
+Route::get('/forgot-password', [PasswordResetController::class, 'showForgotForm'])->name('password.forgot');
+Route::post('/forgot-password', [PasswordResetController::class, 'sendOtp'])->name('password.sendOtp');
+
+Route::get('/verify-otp', [PasswordResetController::class, 'showOtpForm'])->name('password.otpForm');
+Route::post('/verify-otp', [PasswordResetController::class, 'verifyOtp'])->name('password.verifyOtp');
+
+Route::get('/reset-password', [PasswordResetController::class, 'showResetForm'])->name('password.resetForm');
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
 
 // EMAIL VERIFICATION 
 Route::get('/email/verify', function () {

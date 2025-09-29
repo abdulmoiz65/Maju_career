@@ -29,8 +29,8 @@
               <i class="bi bi-briefcase-fill text-primary" style="font-size: 2rem;"></i>
               <h6 class="mt-2 text-primary fw-bold">Total Jobs</h6>
               <h2 class="text-danger">{{ $jobsCount }}</h2>
-              <a href="" class="btn btn-danger btn-sm mb-2">Add Job</a><br>
-              <a href="" class="btn btn-primary btn-sm">View Jobs</a>
+              <a href="{{route('jobs.create')}}" class="btn btn-danger btn-sm mb-2">Add Job</a><br>
+              <a href="{{route('jobs.index')}}" class="btn btn-primary btn-sm">View Jobs</a>
             </div>
           </div>
         </div>

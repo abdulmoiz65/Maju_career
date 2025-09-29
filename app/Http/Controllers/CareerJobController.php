@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CareerJob;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Hash;
 
 class CareerJobController extends Controller
 {
@@ -70,12 +74,29 @@ public function store(Request $request)
         return view('admin.pages.viewjobs', compact('jobs'));
     }
 
-    public function destroy($id)
+public function destroy($id)
 {
-    $job = CareerJob::findOrFail($id);
-    $job->delete();
+    try {
+        $job = CareerJob::findOrFail($id);
 
-    return redirect()->route('jobs.index')->with('success', 'Job deleted successfully!');
+        $job->applications()->update([
+            'is_archived'    => 1,
+            'is_shortlisted' => 0,
+            'is_rejected'    => 0,
+        ]);
+
+        $job->delete();
+
+        return redirect()
+            ->route('jobs.index')
+            ->with('success', 'Job deleted and applications moved to archive.');
+    } catch (QueryException $e) {
+        Log::error("DB error deleting job: " . $e->getMessage());
+        return redirect()->back()->with('error', 'Unable to delete job.');
+    } catch (\Exception $e) {
+        Log::error("General error deleting job: " . $e->getMessage());
+        return redirect()->back()->with('error', 'Something went wrong.');
+    }
 }
 
 }

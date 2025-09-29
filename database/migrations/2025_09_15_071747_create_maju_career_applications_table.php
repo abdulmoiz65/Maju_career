@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('maju_career_applications', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('career_job_id')->constrained('career_jobs')->onDelete('cascade');
+                $table->foreignId('career_job_id')->constrained('career_jobs')->onDelete('set null')->nullable();
                 $table->enum('job_type', ['permanent_faculty','visiting_faculty','staff']);
                 $table->string('name');
                 $table->string('contact', 50);
@@ -23,7 +23,8 @@ return new class extends Migration
                 $table->text('postal_address')->nullable();
                 $table->string('city', 100)->nullable();
                 $table->tinyInteger('is_shortlisted')->default(0);
-                $table->tinyInteger('is_rejected')->default(0);    
+                $table->tinyInteger('is_rejected')->default(0);
+                $table->tinyInteger('is_archived')->default(0);  
                 $table->timestamps();
         });
     }

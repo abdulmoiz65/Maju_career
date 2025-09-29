@@ -65,6 +65,7 @@ Route::prefix('admin')->middleware('admin.auth')->group(function () {
     Route::put('/jobs/{id}', [CareerJobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{id}', [CareerJobController::class, 'destroy'])->name('jobs.destroy');
 
+    Route::get('/applications/archived', [ApplicationController::class, 'archived'])->name('admin.pages.archived');
     Route::get('/applications', [ApplicationController::class, 'index'])->name('admin.pages.view_applications');
     Route::get('/applications/shortlisted', [ApplicationController::class, 'shortlisted'])->name('admin.pages.shortlisted');
     Route::get('/applications/rejected',[ApplicationController::class, 'rejected'])->name('admin.pages.rejected');

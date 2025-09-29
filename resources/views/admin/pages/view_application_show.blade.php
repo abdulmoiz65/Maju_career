@@ -75,6 +75,7 @@
                 </p>
 
 {{-- ✅ Action buttons --}}
+@if(!$application->is_archived)
 @if($application->is_shortlisted)
     {{-- If already shortlisted: only show remove-from-shortlist --}}
     <form method="POST"
@@ -120,6 +121,7 @@
             Reject Application
         </button>
     </form>
+@endif
 @endif
 
 

@@ -171,6 +171,11 @@
                     <a class="nav-link" href="{{route('admin.pages.rejected')}}">View Rejected Applications</a>
                   </li>
 
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin.pages.archived')}}">View Archived Applications</a>
+                  </li>
+
 
                 </ul>
               </div>

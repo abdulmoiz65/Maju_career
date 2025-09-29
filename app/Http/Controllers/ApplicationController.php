@@ -8,6 +8,8 @@ use App\Models\VisitingFaculty;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Models\CareerJob;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
@@ -225,6 +227,39 @@ public function unreject($id)
     return redirect()->back()->with('success', 'Application removed from shortlist.');
 }
 
+public function archived(Request $request)
+{
+    try {
+        $query = Application::query()
+            ->with(['permanentFaculty', 'visitingFaculty', 'staff'])
+            ->where('is_archived', 1);
+
+        // 🔍 Filters
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $query->where(function ($sub) use ($q) {
+                $sub->where('name', 'like', "%$q%")
+                    ->orWhere('email', 'like', "%$q%")
+                    ->orWhere('contact', 'like', "%$q%");
+            });
+        }
+
+        if ($request->filled('job_type')) {
+            $query->where('job_type', $request->job_type);
+        }
+
+        // 📋 Paginate archived apps
+        $applications = $query->orderBy('updated_at', 'desc')->paginate(12);
+
+        return view('admin.pages.archived_applications', compact('applications'));
+
+    } catch (QueryException $e) {
+        Log::error('DB error fetching archived applications: ' . $e->getMessage());
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('error', 'Unable to fetch archived applications. Please try again later.');
+    }
+}
 
     
 public function create($jobId)
@@ -239,7 +274,7 @@ public function create($jobId)
 
 public function index(Request $request)
 {
-    $query = Application::query()->with(['permanentFaculty', 'visitingFaculty', 'staff']);
+    $query = Application::query()->with(['permanentFaculty', 'visitingFaculty', 'staff'])->where('is_archived', 0);
 
     // 🔍 Filters
     if ($request->filled('q')) {
@@ -269,7 +304,6 @@ public function index(Request $request)
         $query->whereRaw('CAST(salary_desired AS UNSIGNED) <= ?', [$request->max_salary]);
     }
 
-    // 📋 Paginate results
     $applications = $query->orderBy('created_at', 'desc')->paginate(12);
 
     return view('admin.pages.view_applications', compact('applications'));

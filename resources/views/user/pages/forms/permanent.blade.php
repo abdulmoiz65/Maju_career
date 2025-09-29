@@ -22,7 +22,7 @@
 <div class="col-md-6">
 <div class="mb-3">
     <label class="form-label">Name of Institute</label>
-    <input type="text" name="institute" class="form-control" value="{{ old('institute') }}">
+    <input type="text" name="institute" class="form-control" required value="{{ old('institute') }}">
 </div>
 </div>
 
@@ -31,7 +31,7 @@
 <div class="col-md-6">
 <div class="mb-3">
     <label class="form-label">Passing Year</label>
-    <input type="number" name="passing_year" class="form-control" min="1950" max="{{ date('Y') }}" value="{{ old('passing_year') }}">
+    <input type="number" name="passing_year" class="form-control" required min="1950" max="{{ date('Y') }}" value="{{ old('passing_year') }}">
 </div>
 </div>
 
@@ -40,7 +40,7 @@
         {{-- Postal Address --}}
 <div class="mb-3">
     <label class="form-label">Postal Address</label>
-    <textarea name="postal_address" class="form-control" rows="2">{{ old('postal_address') }}</textarea>
+    <textarea name="postal_address" class="form-control" required rows="2">{{ old('postal_address') }}</textarea>
 </div>
 
     </div>
@@ -49,7 +49,7 @@
         {{-- Current City --}}
 <div class="mb-3">
     <label class="form-label">Current City</label>
-    <input type="text" name="city" class="form-control" value="{{ old('city') }}">
+    <input type="text" name="city" class="form-control" required value="{{ old('city') }}">
 </div>
     </div>
 
@@ -60,7 +60,7 @@
 {{-- Area of Specialization --}}
 <div class="mb-3">
     <label class="form-label">Area of Specialization</label>
-    <input type="text" name="specialization" class="form-control" value="{{ old('specialization') }}">
+    <input type="text" name="specialization" class="form-control" required value="{{ old('specialization') }}">
 </div>
 
 </div>
@@ -89,7 +89,7 @@
         {{-- Salary Desired --}}
 <div class="mb-3">
     <label class="form-label">Salary Desired</label>
-    <input type="text" name="salary_desired" class="form-control" value="{{ old('salary_desired') }}">
+    <input type="text" name="salary_desired" class="form-control" required value="{{ old('salary_desired') }}">
 </div>
 
 

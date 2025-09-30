@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
 class ApplicationController extends Controller
-{
+{   
     public function store(Request $request)
     {
         // Step 1: Create the base application
@@ -140,7 +140,7 @@ class ApplicationController extends Controller
 // shortlisted application 
                 public function shortlisted(Request $request)
         {
-            $query = \App\Models\Application::where('is_shortlisted', true);
+            $query = Application::where('is_shortlisted', true);
 
             if ($request->filled('q')) {
                 $q = $request->q;
@@ -160,53 +160,49 @@ class ApplicationController extends Controller
             return view('admin.pages.shortlisted', compact('applications'));
         }
 
-public function downloadResumes(Request $request)
-{
-    $ids = $request->applications;
-
-    if (!$ids || count($ids) == 0) {
-        return back()->with('error', 'Please select at least one application.');
-    }
-
-    $applications = Application::whereIn('id', $ids)->get();
-
-    $zip = new \ZipArchive;
-    $zipFileName = 'resumes_' . now()->format('Ymd_His') . '.zip';
-    $zipPath = storage_path('app/public/uploads/' . $zipFileName);
-
-    // Ensure uploads dir exists
-    if (!file_exists(dirname($zipPath))) {
-        mkdir(dirname($zipPath), 0755, true);
-    }
-
-    if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
-        foreach ($applications as $app) {
-            if ($app->resume && \Storage::disk('public')->exists("uploads/resume/{$app->resume}")) {
-                $filePath = storage_path("app/public/uploads/resume/{$app->resume}");
-
-                // Sanitize name + prevent duplicates
-                $safeName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $app->name);
-                $newFileName = $safeName . '_' . $app->id . '.' . pathinfo($app->resume, PATHINFO_EXTENSION);
-
-                $zip->addFile($filePath, $newFileName);
+        public function downloadResumes(Request $request)
+        {
+            $ids = $request->input('applications', []);
+        
+            // Prevent empty selection
+            if (empty($ids)) {
+                return back()->with('error', 'Please select at least one application.');
             }
+        
+            // Fetch only selected apps
+            $applications = Application::with(['permanentFaculty', 'visitingFaculty', 'staff'])
+                ->whereIn('id', $ids)
+                ->get();
+        
+            if ($applications->isEmpty()) {
+                return back()->with('error', 'No valid resumes found for the selected applications.');
+            }
+        
+            $zip = new \ZipArchive;
+            $zipFileName = storage_path('app/public/resumes.zip');
+        
+            if ($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+                foreach ($applications as $app) {
+                    foreach (['permanentFaculty', 'visitingFaculty', 'staff'] as $relation) {
+                        if ($app->$relation && $app->$relation->resume) {
+                            $resumePath = storage_path("app/public/" . $app->$relation->resume);
+                            if (file_exists($resumePath)) {
+                                $zip->addFile($resumePath, basename($resumePath));
+                            }
+                        }
+                    }
+                }
+                $zip->close();
+            }
+        
+            if (!file_exists($zipFileName)) {
+                return back()->with('error', 'No valid resumes found.');
+            }
+        
+            return response()->download($zipFileName)->deleteFileAfterSend(true);
         }
-
-        $zip->close();
-
-        // If empty ZIP
-        if (!file_exists($zipPath) || filesize($zipPath) === 0) {
-            @unlink($zipPath);
-            return back()->with('error', 'No valid resumes found.');
-        }
-
-        return response()->download($zipPath)->deleteFileAfterSend(true);
-    }
-
-    return back()->with('error', 'Could not create ZIP file. Please try again.');
-}
-
-
+        
+        
 
         // reject application
                 public function reject($id)

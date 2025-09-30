@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAJU Career Portal – Verify Email</title>
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{{ asset('css/auth_style.css') }}">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Verify OTP — MAJU Career</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ asset('css/auth_style.css') }}"/>
 </head>
 <body>
-
 <div class="signup-container">
-  <!-- Left Panel -->
+  <!-- Left Side -->
   <div class="promo">
-    <img src="{{ asset('images/logofavwhite.png') }}" alt="Opportunities">
-    <h2>Secure Your Account at MAJU</h2>
-    <p>Please verify your email address to continue applying for jobs and exploring opportunities.</p>
+    <img src="{{ asset('images/logofavwhite.png') }}" alt="MAJU"/>
+    <h2>Verify Your Email</h2>
+    <p>Enter the 6-digit OTP we just sent to <strong>{{ Auth::user()->email }}</strong></p>
   </div>
 
-  <!-- Right Panel -->
+  <!-- Right Side -->
   <div class="signup-form">
-    <h3>Email Verification Required</h3>
-    <p>We’ve sent a verification link to your email. Please check your inbox and click the link to activate your account.</p>
+    <h3>Email Verification</h3>
 
-    @if (session('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
-        </div>
+    @if(session('success'))
+      <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if($errors->any())
+      <div class="alert alert-danger">
+        <ul class="mb-0">@foreach($errors->all() as $err)<li>{{ $err }}</li>@endforeach</ul>
+      </div>
     @endif
 
-    <form method="POST" action="{{ route('verification.send') }}">
+    <form action="{{ route('verification.verify') }}" method="POST">
       @csrf
+      <div class="mb-3">
+        <label class="form-label">One-Time Password</label>
+        <input type="text" name="otp" class="form-control" maxlength="6" required placeholder="123456">
+      </div>
+
       <button type="submit" class="btn btn-primary-gradient w-100 mb-3">
-        Resend Verification Email
+        Verify OTP
+      </button>
+    </form>
+
+    <form action="{{ route('verification.resend') }}" method="POST">
+      @csrf
+      <button type="submit" class="btn btn-outline-secondary w-100 mb-3">
+        Resend OTP
       </button>
     </form>
 
@@ -43,12 +55,11 @@
         <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
       </a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-          @csrf
+        @csrf
       </form>
     </div>
   </div>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyOtpMail;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 
 class AuthController extends Controller
 {
@@ -13,28 +18,83 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function register(Request $request) {
-       $request->validate([
-        'username' => 'required|string|max:255|unique:users',
-        'first_name' => 'required|string|max:255',
-        'last_name'  => 'required|string|max:255',
-        'email'     => 'required|email|unique:users',
-        'password'  => 'required|string|min:6|confirmed',
-    ]);
-
-    $user = User::create([
-        'username'  => $request->username,
-        'first_name'=> $request->first_name,
-        'last_name' => $request->last_name,
-        'email'     => $request->email,
-        'password'  => Hash::make($request->password),
-    ]);
-    // Optionally log in immediately
-    Auth::login($user);
-    $user->sendEmailVerificationNotification();
-
-    return redirect()->route('verification.notice')->with('success', 'We sent a verification link to your email. Please verify before applying.');
+    public function register(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users',
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'email'     => 'required|email|unique:users',
+            'password'  => 'required|string|min:6|confirmed',
+        ]);
+    
+        $user = User::create([
+            'username'  => $request->username,
+            'first_name'=> $request->first_name,
+            'last_name' => $request->last_name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+        ]);
+    
+        // Generate OTP
+        $otp = rand(100000, 999999);
+        $user->emailverify_otp = $otp;
+        $user->emailverify_otp_expires_at = Carbon::now()->addMinutes(10);
+        $user->save();
+    
+        // Send mail
+        Mail::to($user->email)->send(new VerifyOtpMail($user, $otp));
+    
+        Auth::login($user);
+    
+        return redirect()->route('verification.notice')
+            ->with('success', 'We sent a verification code to your email. Please verify before applying.');
     }
+
+    public function showVerifyForm()
+    {
+        return view('auth.verify-email');
+    }
+    
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|digits:6',
+        ]);
+    
+        $user = $request->user();
+    
+        if (!$user->emailverify_otp || $user->emailverify_otp_expires_at < Carbon::now()) {
+            return back()->withErrors(['otp' => 'OTP has expired. Please request a new one.']);
+        }
+    
+        if ($request->otp != $user->emailverify_otp) {
+            return back()->withErrors(['otp' => 'Invalid OTP.']);
+        }
+    
+        $user->email_verified_at = Carbon::now();
+        $user->emailverify_otp = null;
+        $user->emailverify_otp_expires_at = null;
+        $user->save();
+    
+        return redirect()->route('user.index')->with('success', 'Your email has been verified!');
+    }
+    
+    public function resendOtp(Request $request)
+    {
+        $user = $request->user();
+    
+        $otp = rand(100000, 999999);
+        $user->emailverify_otp = $otp;
+        $user->emailverify_otp_expires_at = Carbon::now()->addMinutes(10);
+        $user->save();
+    
+        Mail::to($user->email)->send(new VerifyOtpMail($user, $otp));
+    
+        return back()->with('success', 'A new verification code has been sent to your email.');
+    }
+    
+
 
 public function showLogin()
 {

@@ -33,20 +33,15 @@ Route::post('/verify-otp', [PasswordResetController::class, 'verifyOtp'])->name(
 Route::get('/reset-password', [PasswordResetController::class, 'showResetForm'])->name('password.resetForm');
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
 
-// EMAIL VERIFICATION 
-Route::get('/email/verify', function () {
-    return view('auth.verify-email'); // make this blade
-})->middleware('auth')->name('verification.notice');
+Route::get('/email/verify', [AuthController::class, 'showVerifyForm'])
+    ->middleware('auth')->name('verification.notice');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill(); // updates email_verified_at
-    return redirect()->route('user.index')->with('success', 'Email verified!');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verify', [AuthController::class, 'verifyOtp'])
+    ->middleware('auth')->name('verification.verify');
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::post('/email/resend-otp', [AuthController::class, 'resendOtp'])
+    ->middleware('auth')->name('verification.resend');
+
 
 
 Route::prefix('admin')->group(function () {

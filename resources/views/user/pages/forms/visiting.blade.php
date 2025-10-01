@@ -24,7 +24,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Postal Address</label>
-                <textarea name="postal_address" class="form-control" rows="2">{{ old('postal_address') }}</textarea>
+                <textarea name="postal_address" class="form-control" required rows="2">{{ old('postal_address') }}</textarea>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Salary Desired</label>
-                <input type="text" name="salary_desired" class="form-control" value="{{ old('salary_desired') }}">
+                <input type="text" name="salary_desired" class="form-control" required value="{{ old('salary_desired') }}">
             </div>
         </div>
 
@@ -42,7 +42,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">When can you join us?</label>
-                <input type="date" name="join_date" class="form-control" value="{{ old('join_date') }}">
+                <input type="date" name="join_date" class="form-control" required value="{{ old('join_date') }}">
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Name of Institute</label>
-                <input type="text" name="institute" class="form-control" value="{{ old('institute') }}">
+                <input type="text" name="institute" class="form-control" required value="{{ old('institute') }}">
             </div>
         </div>
 
@@ -75,7 +75,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Passing Year</label>
-                <input type="number" name="passing_year" class="form-control"
+                <input type="number" name="passing_year" class="form-control" required
                        min="1950" max="{{ date('Y') }}" value="{{ old('passing_year') }}">
             </div>
         </div>
@@ -84,7 +84,7 @@
     {{-- Area of Specialization --}}
     <div class="mb-3">
         <label class="form-label">Area of Specialization</label>
-        <input type="text" name="specialization" class="form-control" value="{{ old('specialization') }}">
+        <input type="text" name="specialization" class="form-control" required value="{{ old('specialization') }}">
     </div>
 </div>
 
@@ -125,7 +125,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Name of Organization (Recent)</label>
-                <input type="text" name="org_recent" class="form-control" value="{{ old('org_recent') }}">
+                <input type="text" name="org_recent" class="form-control" required value="{{ old('org_recent') }}">
             </div>
         </div>
 
@@ -133,7 +133,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Designation (Recent)</label>
-                <input type="text" name="designation_recent" class="form-control" value="{{ old('designation_recent') }}">
+                <input type="text" name="designation_recent" class="form-control" required value="{{ old('designation_recent') }}">
             </div>
         </div>
     </div>
@@ -146,14 +146,14 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Years of Experience in Academia</label>
-                <input type="number" name="years_academia" class="form-control" min="0" value="{{ old('years_academia') }}">
+                <input type="number" name="years_academia" class="form-control" required min="0" value="{{ old('years_academia') }}">
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Years of Experience in Industry</label>
-                <input type="number" name="years_industry" class="form-control" min="0" value="{{ old('years_industry') }}">
+                <input type="number" name="years_industry" class="form-control" required min="0" value="{{ old('years_industry') }}">
             </div>
         </div>
     </div>

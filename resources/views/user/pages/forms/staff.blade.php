@@ -40,7 +40,7 @@
             <div class="mb-3">
                 <label class="form-label">Salary Desired</label>
                 <input type="text" name="salary_desired" class="form-control"
-                       value="{{ old('salary_desired') }}">
+                    required   value="{{ old('salary_desired') }}">
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">When can you join us?</label>
-                <input type="date" name="join_date" class="form-control"
+                <input type="date" name="join_date" class="form-control" required
                        value="{{ old('join_date') }}">
             </div>
         </div>
@@ -77,7 +77,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Name of Institute</label>
-                <input type="text" name="institute" class="form-control"
+                <input type="text" name="institute" class="form-control" required
                        value="{{ old('institute') }}">
             </div>
         </div>
@@ -86,7 +86,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Passing Year</label>
-                <input type="number" name="passing_year" class="form-control"
+                <input type="number" name="passing_year" class="form-control" required
                        min="1950" max="{{ date('Y') }}" value="{{ old('passing_year') }}">
             </div>
         </div>
@@ -96,7 +96,7 @@
     <div class="mb-3">
         <label class="form-label">Area of Specialization</label>
         <input type="text" name="specialization" class="form-control"
-               value="{{ old('specialization') }}">
+            required   value="{{ old('specialization') }}">
     </div>
 </div>
 
@@ -109,7 +109,7 @@
             <div class="mb-3">
                 <label class="form-label">Name of Organization</label>
                 <input type="text" name="org_recent" class="form-control"
-                       value="{{ old('org_recent') }}">
+                    required   value="{{ old('org_recent') }}">
             </div>
         </div>
 
@@ -118,7 +118,7 @@
             <div class="mb-3">
                 <label class="form-label">Designation</label>
                 <input type="text" name="designation_recent" class="form-control"
-                       value="{{ old('designation_recent') }}">
+                    required   value="{{ old('designation_recent') }}">
             </div>
         </div>
     </div>
@@ -129,7 +129,7 @@
             <div class="mb-3">
                 <label class="form-label">Date of Joining</label>
                 <input type="date" name="date_of_joining" class="form-control"
-                       value="{{ old('date_of_joining') }}">
+                    required   value="{{ old('date_of_joining') }}">
             </div>
         </div>
     </div>
@@ -141,7 +141,7 @@
     <div class="mb-3">
         <label class="form-label">Years of Experience</label>
         <input type="number" name="years_experience" class="form-control"
-               min="0" value="{{ old('years_experience') }}">
+            required   min="0" value="{{ old('years_experience') }}">
     </div>
 </div>
 

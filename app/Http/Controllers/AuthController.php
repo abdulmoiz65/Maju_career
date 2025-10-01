@@ -118,31 +118,31 @@ public function login(Request $request)
     }
 
     if (! Hash::check($request->password, $user->password)) {
-      
         return back()->withErrors([
             'password' => 'The password you entered is incorrect.',
-        ])->onlyInput('email'); 
+        ])->onlyInput('email');
     }
 
-    if (Auth::attempt($request->only('email','password'), $request->boolean('remember'))) {
+    // Check email verification before logging them in
+    if (is_null($user->google_id) && ! $user->hasVerifiedEmail()) {
+        return redirect()->route('verification.notice')
+            ->with('error', 'Please verify your email with OTP before logging in.');
+    }
+
+    // Now attempt login
+    if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
         $request->session()->regenerate();
 
-        // Email verification check
-        if (is_null($user->google_id) && ! $user->hasVerifiedEmail()) {
-            Auth::logout();
-            return redirect()->route('verification.notice')
-                ->with('error', 'You must verify your email before logging in.');
-        }
-
         return redirect()->intended(route('user.index'))
-                         ->with('success', 'Welcome back, '.$user->first_name.'!');
+            ->with('success', 'Welcome back, '.$user->first_name.'!');
     }
 
-    // Fallback (should rarely hit)
+    // Fallback (rare)
     return back()->withErrors([
         'email' => 'Login failed. Please try again.',
     ]);
 }
+
 
 
 public function logout(Request $request)

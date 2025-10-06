@@ -17,6 +17,7 @@ class Application extends Model
         'name',
         'contact',
         'email',
+        'linkedin_profile',
         'dob',
         'salary_desired',
         'postal_address',

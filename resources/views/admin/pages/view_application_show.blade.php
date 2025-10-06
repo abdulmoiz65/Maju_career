@@ -130,14 +130,27 @@
         </div>
 
         {{-- ===== Personal Info ===== --}}
-        <div class="resume-section">
-            <h4>Personal Information</h4>
-            <p><strong>Date of Birth:</strong> {{ $application->dob ?? '-' }}</p>
-            <p><strong>City:</strong> {{ $application->city ?? '-' }}</p>
-            <p><strong>Postal Address:</strong> {{ $application->postal_address ?? '-' }}</p>
-            <p><strong>Desired Salary:</strong> {{ $application->salary_desired ?? '-' }}</p>
-            <p><strong>Submitted At:</strong> {{ $application->created_at->format('d M, Y h:i A') }}</p>
-        </div>
+<div class="resume-section">
+    <h4>Personal Information</h4>
+    <p><strong>Date of Birth:</strong> {{ $application->dob ?? '-' }}</p>
+    <p><strong>City:</strong> {{ $application->city ?? '-' }}</p>
+    <p><strong>Postal Address:</strong> {{ $application->postal_address ?? '-' }}</p>
+    <p><strong>Desired Salary:</strong> {{ $application->salary_desired ?? '-' }}</p>
+
+    {{-- ✅ New LinkedIn Profile --}}
+    @if(!empty($application->linkedin_profile))
+        <p>
+            <strong>LinkedIn:</strong>
+            <a href="{{ $application->linkedin_profile }}" 
+               target="_blank" 
+               style="color:#0a66c2; text-decoration:none;">
+               {{ $application->linkedin_profile }}
+            </a>
+        </p>
+    @endif
+
+    <p><strong>Submitted At:</strong> {{ $application->created_at->format('d M, Y h:i A') }}</p>
+</div>
 
         {{-- ===== Education & Experience based on job type ===== --}}
         @if($pf)

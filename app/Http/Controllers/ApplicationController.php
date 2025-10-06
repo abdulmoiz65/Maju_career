@@ -25,6 +25,7 @@ class ApplicationController extends Controller
             'name' => $request->name,
             'contact' => $request->contact,
             'email' => $request->email,
+            'linkedin_profile' => $request->linkedin_profile,
             'dob' => $request->dob,
             'salary_desired' => $request->salary_desired,
             'postal_address' => $request->postal_address,

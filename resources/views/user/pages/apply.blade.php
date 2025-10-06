@@ -73,6 +73,22 @@
         </div>
         </div>
         </div>
+
+         <div class="row g-3">
+    <div class="col-md-12">
+      <div class="mb-3">
+        <label class="form-label">LinkedIn Profile (Optional)</label>
+        <input 
+          type="url" 
+          name="linkedin_profile" 
+          class="form-control" 
+          placeholder="https://www.linkedin.com/in/your-profile"
+          value="{{ old('linkedin_profile') }}"
+        >
+      </div>
+    </div>
+  </div>
+
         </div>
 
 

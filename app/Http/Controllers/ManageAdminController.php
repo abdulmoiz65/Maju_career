@@ -103,37 +103,55 @@ class ManageAdminController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {
-        try {
-            $admin = Admin::findOrFail($id);
+{
+    try {
+        $admin = Admin::findOrFail($id);
 
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:admins,email,' . $admin->id,
-                'password' => 'nullable|min:6|confirmed',
-                'role' => 'required|in:admin,super_admin',
-            ]);
-
-            $admin->name = $validated['name'];
-            $admin->email = $validated['email'];
-            $admin->role = $validated['role'];
-
-            if (!empty($validated['password'])) {
-                $admin->password = Hash::make($validated['password']);
+        if (
+            $admin->role === 'super_admin' &&
+            $request->role !== 'super_admin'
+        ) {
+            $superAdminCount = Admin::where('role', 'super_admin')->count();
+            if ($superAdminCount <= 1) {
+                return back()->with('error', 'You cannot demote the last Super Admin.');
             }
-
-            $admin->save();
-
-            return redirect()
-                ->route('admin.pages.view_admin')
-                ->with('success', 'Admin updated successfully!');
-        } catch (QueryException $e) {
-            Log::error('DB error updating admin: ' . $e->getMessage());
-            return redirect()
-                ->route('admin.pages.edit_admin', $id)
-                ->with('error', 'Unable to update admin. Please try again later.');
         }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:admins,email,' . $admin->id,
+            'password' => 'nullable|min:6|confirmed',
+            'role' => 'required|in:admin,super_admin',
+        ]);
+
+        $admin->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'role' => $validated['role'],
+        ]);
+
+        if (!empty($validated['password'])) {
+            $admin->password = Hash::make($validated['password']);
+        }
+
+        $admin->save();
+
+        return redirect()
+            ->route('admin.pages.view_admin')
+            ->with('success', 'Admin updated successfully!');
+    } catch (QueryException $e) {
+        Log::error('DB error updating admin: ' . $e->getMessage());
+        return redirect()
+            ->route('admin.pages.edit_admin', $id)
+            ->with('error', 'Unable to update admin. Please try again later.');
+    } catch (\Exception $e) {
+        Log::error('Unexpected error updating admin: ' . $e->getMessage());
+        return redirect()
+            ->route('admin.pages.edit_admin', $id)
+            ->with('error', 'Something went wrong. Please try again.');
     }
+}
+
 
     /**
      * Remove the specified resource from storage.

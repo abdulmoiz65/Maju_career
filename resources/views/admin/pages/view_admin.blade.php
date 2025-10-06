@@ -49,9 +49,10 @@
                 </td>
                 <td>{{ $admin->created_at ? $admin->created_at->format('d M Y') : '—' }}</td>
                 <td>
-                  {{-- Prevent editing/deleting Super Admin by mistake --}}
-                  @if($admin->role !== 'super_admin')
+                 
                     <a href="{{ route('admin.pages.edit_admin', $admin->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                     {{-- Prevent editing/deleting Super Admin by mistake --}}
+                  @if($admin->role !== 'super_admin')
                     <form action="{{ route('admins.destroy', $admin->id) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')

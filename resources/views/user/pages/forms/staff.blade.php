@@ -38,7 +38,7 @@
         {{-- Salary Desired --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">Salary Desired</label>
+                <label class="form-label">Salary Desired<span class="text-danger">*</span></label>
                 <input type="text" name="salary_desired" class="form-control"
                     required   value="{{ old('salary_desired') }}">
             </div>
@@ -49,7 +49,7 @@
         {{-- Availability --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">When can you join us?</label>
+                <label class="form-label">When can you join us?<span class="text-danger">*</span></label>
                 <input type="date" name="join_date" class="form-control" required
                        value="{{ old('join_date') }}">
             </div>
@@ -76,7 +76,7 @@
         {{-- Institute --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">Name of Institute</label>
+                <label class="form-label">Name of Institute<span class="text-danger">*</span></label>
                 <input type="text" name="institute" class="form-control" required
                        value="{{ old('institute') }}">
             </div>
@@ -85,7 +85,7 @@
         {{-- Passing Year --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">Passing Year</label>
+                <label class="form-label">Passing Year<span class="text-danger">*</span></label>
                 <input type="number" name="passing_year" class="form-control" required
                        min="1950" max="{{ date('Y') }}" value="{{ old('passing_year') }}">
             </div>
@@ -94,7 +94,7 @@
 
     {{-- Area of Specialization --}}
     <div class="mb-3">
-        <label class="form-label">Area of Specialization</label>
+        <label class="form-label">Area of Specialization<span class="text-danger">*</span></label>
         <input type="text" name="specialization" class="form-control"
             required   value="{{ old('specialization') }}">
     </div>
@@ -107,7 +107,7 @@
         {{-- Organization --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">Name of Organization</label>
+                <label class="form-label">Name of Organization<span class="text-danger">*</span></label>
                 <input type="text" name="org_recent" class="form-control"
                     required   value="{{ old('org_recent') }}">
             </div>
@@ -116,7 +116,7 @@
         {{-- Designation --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">Designation</label>
+                <label class="form-label">Designation<span class="text-danger">*</span></label>
                 <input type="text" name="designation_recent" class="form-control"
                     required   value="{{ old('designation_recent') }}">
             </div>
@@ -127,7 +127,7 @@
         {{-- Date of Joining --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">Date of Joining</label>
+                <label class="form-label">Date of Joining<span class="text-danger">*</span></label>
                 <input type="date" name="date_of_joining" class="form-control"
                     required   value="{{ old('date_of_joining') }}">
             </div>
@@ -139,7 +139,7 @@
 <div class="form-section">
     <h6 class="mb-3">Experience</h6>
     <div class="mb-3">
-        <label class="form-label">Years of Experience</label>
+        <label class="form-label">Years of Experience<span class="text-danger">*</span></label>
         <input type="number" name="years_experience" class="form-control"
             required   min="0" value="{{ old('years_experience') }}">
     </div>
@@ -152,7 +152,7 @@
         {{-- Resume --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">Resume (PDF/DOC, Max 5MB)</label>
+                <label class="form-label">Resume (PDF/DOC, Max 5MB)<span class="text-danger">*</span></label>
                 <input type="file" name="resume" class="form-control"
                        accept=".pdf,.doc,.docx" required>
             </div>
@@ -161,7 +161,7 @@
         {{-- Photo --}}
         <div class="col-md-6">
             <div class="mb-3">
-                <label class="form-label">Current Photo (Max 10MB)</label>
+                <label class="form-label">Current Photo (Max 10MB)<span class="text-danger">*</span></label>
                 <input type="file" name="photo" class="form-control"
                        accept="image/*" required>
             </div>

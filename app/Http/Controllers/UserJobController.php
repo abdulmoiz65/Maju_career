@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class UserJobController extends Controller
 {
-    public function index()
+public function index()
 {
-    $query = CareerJob::query()->latest();
+    $query = CareerJob::withCount('applications')->latest();
 
     // Apply filter if job_type is selected
     if (request()->filled('job_type')) {
@@ -17,8 +17,6 @@ class UserJobController extends Controller
     }
 
     $jobs = $query->get();
-    $jobs = CareerJob::withCount('applications')->get();
-
 
     return view('user.pages.index', compact('jobs'));
 }

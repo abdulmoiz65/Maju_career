@@ -46,7 +46,7 @@
               </a>
             </li>
            
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                 <i class="mdi mdi-bell-outline"></i>
                 <span class="count-symbol bg-danger"></span>
@@ -82,7 +82,7 @@
                 <div class="dropdown-divider"></div>
                 <h6 class="p-3 mb-0 text-center">See all notifications</h6>
               </div>
-            </li>
+            </li> -->
        
             <li class="nav-item nav-settings d-none d-lg-block">
               <a class="nav-link" href="#">
@@ -131,8 +131,8 @@
                   <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
-                  <span class="font-weight-bold mb-2"></span>
-                  <span class="text-secondary text-small"></span>
+                  <span class="font-weight-bold mb-2 text-uppercase"> {{ Auth::guard('admin')->user()->name ?? 'Admin' }}</span>
+                  <span class="text-secondary text-small">{{ Auth::guard('admin')->user()->role ?? 'Admin' }}</span>
                 </div>
                 <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
               </a>

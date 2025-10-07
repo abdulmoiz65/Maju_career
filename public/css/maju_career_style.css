@@ -33,9 +33,16 @@ body {
     color: white !important;
 }
 
+.navbar-brand img {
+    height: 60px;
+}
+
 @media (max-width: 768px) {
     .navbar-brand {
-        font-size: 1.1rem;
+        font-size: 1rem;
+    }
+    .navbar-brand img {
+        height: 30px;
     }
 }
 

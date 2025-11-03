@@ -306,6 +306,10 @@ public function index(Request $request)
         });
     }
 
+    if ($request->filled('career_job_id')) {
+        $query->where('career_job_id', $request->career_job_id);
+    }
+
     if ($request->filled('job_type')) {
         $query->where('job_type', $request->job_type);
     }
@@ -324,7 +328,7 @@ public function index(Request $request)
         $query->whereRaw('CAST(salary_desired AS UNSIGNED) <= ?', [$request->max_salary]);
     }
 
-    $applications = $query->orderBy('created_at', 'desc')->paginate(12);
+    $applications = $query->orderBy('created_at', 'desc')->paginate(16);
 
     return view('admin.pages.view_applications', compact('applications'));
 }

@@ -18,6 +18,18 @@ class ApplicationController extends Controller
 {   
     public function store(Request $request)
     {
+        
+        $alreadyApplied = \App\Models\Application::where('career_job_id', $request->career_job_id)
+        ->where(function ($query) use ($request) {
+        $query->where('email', $request->email)
+        ->orWhere('contact', $request->contact);
+        })
+        ->exists();
+
+        if ($alreadyApplied) {
+            return redirect('/')->with('error', 'You have already applied for this job. Duplicate applications are not allowed.')->withInput();
+        }
+
         // Step 1: Create the base application
         $application = Application::create([
             'career_job_id' => $request->career_job_id,

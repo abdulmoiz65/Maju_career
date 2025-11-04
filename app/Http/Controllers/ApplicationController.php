@@ -168,7 +168,7 @@ class ApplicationController extends Controller
                 $query->where('job_type', $request->job_type);
             }
 
-            $applications = $query->paginate(12);
+            $applications = $query->paginate(12)->appends($request->all());
 
             return view('admin.pages.shortlisted', compact('applications'));
         }
@@ -244,7 +244,7 @@ class ApplicationController extends Controller
         $query->where('job_type', $request->job_type);
     }
 
-    $applications = $query->latest()->paginate(10);
+    $applications = $query->latest()->paginate(12)->appends($request->all());
 
     return view('admin.pages.rejected', compact('applications'));
 }
@@ -281,7 +281,7 @@ public function archived(Request $request)
         }
 
         // 📋 Paginate archived apps
-        $applications = $query->orderBy('updated_at', 'desc')->paginate(12);
+        $applications = $query->orderBy('updated_at', 'desc')->paginate(12)->appends($request->all());
 
         return view('admin.pages.archived_applications', compact('applications'));
 
@@ -340,7 +340,7 @@ public function index(Request $request)
         $query->whereRaw('CAST(salary_desired AS UNSIGNED) <= ?', [$request->max_salary]);
     }
 
-    $applications = $query->orderBy('created_at', 'desc')->paginate(16);
+    $applications = $query->orderBy('created_at', 'desc')->paginate(16)->appends($request->all());
 
     return view('admin.pages.view_applications', compact('applications'));
 }

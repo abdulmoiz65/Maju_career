@@ -167,7 +167,9 @@ class ApplicationController extends Controller
             if ($request->filled('job_type')) {
                 $query->where('job_type', $request->job_type);
             }
-
+            if ($request->filled('career_job_id')) {
+            $query->where('career_job_id', $request->career_job_id);
+            }
             $applications = $query->paginate(12)->appends($request->all());
 
             return view('admin.pages.shortlisted', compact('applications'));
@@ -327,19 +329,23 @@ public function index(Request $request)
     }
 
     if ($request->filled('highest_degree')) {
-        $query->whereHas('permanentFaculty', fn($q) => $q->where('highest_degree', $request->highest_degree))
-              ->orWhereHas('visitingFaculty', fn($q) => $q->where('highest_degree', $request->highest_degree))
-              ->orWhereHas('staff', fn($q) => $q->where('highest_degree', $request->highest_degree));
+        $query->where(function ($q) use ($request) {
+            $q->whereHas('permanentFaculty', fn($x) => $x->where('highest_degree', $request->highest_degree))
+            ->orWhereHas('visitingFaculty', fn($x) => $x->where('highest_degree', $request->highest_degree))
+            ->orWhereHas('staff', fn($x) => $x->where('highest_degree', $request->highest_degree));
+        });
     }
 
     if ($request->filled('min_salary')) {
-        $query->whereRaw('CAST(salary_desired AS UNSIGNED) >= ?', [$request->min_salary]);
+        $query->whereRaw("salary_desired REGEXP '^[0-9]+$'")
+            ->whereRaw('CAST(salary_desired AS UNSIGNED) >= ?', [$request->min_salary]);
     }
 
     if ($request->filled('max_salary')) {
-        $query->whereRaw('CAST(salary_desired AS UNSIGNED) <= ?', [$request->max_salary]);
+        $query->whereRaw("salary_desired REGEXP '^[0-9]+$'")
+            ->whereRaw('CAST(salary_desired AS UNSIGNED) <= ?', [$request->max_salary]);
     }
-
+    
     $applications = $query->orderBy('created_at', 'desc')->paginate(16)->appends($request->all());
 
     return view('admin.pages.view_applications', compact('applications'));

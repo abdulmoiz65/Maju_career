@@ -24,6 +24,17 @@
             <label class="form-label">Search</label>
             <input type="text" name="q" value="{{ request('q') }}" class="form-control" placeholder="Name, Email, Contact">
           </div>
+           <div class="col-md-3">
+          <label class="form-label">Job Title</label>
+          <select name="career_job_id" class="form-select">
+            <option value="">All</option>
+            @foreach(\App\Models\CareerJob::orderBy('title')->get() as $job)
+              <option value="{{ $job->id }}" @selected(request('career_job_id') == $job->id)>
+                {{ $job->title }}
+              </option>
+            @endforeach
+          </select>
+        </div>
           <div class="col-md-3">
             <label class="form-label">Job Type</label>
             <select name="job_type" class="form-select">

@@ -47,7 +47,7 @@
                           @json($job->job_type),
                           @json(Str::limit($job->description, 2500)),
                           @json($job->applications_count),
-                          @json($job->contact ?? "careers@jinnah.edu"),
+                          @json($job->contact ?? "hr@jinnah.edu"),
                           @json($job->status),
                           @json($job->created_at->diffForHumans())
                       )'>

@@ -6,6 +6,8 @@
     --text-dark: #1f2937;
     --text-light: #6b7280;
     --bg-light: #f8fafc;
+    --maju-red: #d62c1f;
+    --maju-blue: #112269;
 }
 
 * {
@@ -15,14 +17,14 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
 }
 
 /* Header */
 .navbar {
-    background: linear-gradient(135deg,#4f46e5,#1e3a8a);
+    background: var(--maju-blue);
     padding: 1rem 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
@@ -30,7 +32,7 @@ body {
 .navbar-brand {
     font-size: 1.8rem;
     font-weight: bold;
-    color: white !important;
+    color: var(--bg-light) !important;
 }
 
 .navbar-brand img {
@@ -58,22 +60,22 @@ body {
 }
 
 .btn-login {
-    background: rgba(255,255,255,0.2);
-    border: 2px solid rgba(255,255,255,0.3);
+    background: var(--maju-red);
+    border: 1px solid ;
     color: white;
     padding: 0.5rem 1.5rem;
-    border-radius: 25px;
+    border-radius: 0px;
     transition: all 0.3s ease;
 }
 
 .btn-login:hover {
     background: white;
-    color: var(--primary-color);
+    color: var(--maju-red);
 }
 
 /* Hero Section */
 .hero {
-      background: linear-gradient(135deg,#4f46e5,#1e3a8a);
+      background: var(--maju-blue);
     color: white;
     padding: 4rem 0;
     text-align: center;
@@ -122,18 +124,21 @@ body {
 }
 
 .btn-search {
-    background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+    background: linear-gradient(45deg, #d62c1f 0%, #c2382a 40%, var(--primary-color) 100%);
     border: none;
     color: white;
     padding: 0.75rem 2rem;
-    border-radius: 10px;
+    border-radius: 0px;
     font-weight: 600;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-search:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+    color: var(--maju-red);
+    background: var(--bg-light);
+    border: var(--maju-red) 2px solid;
 }
 
 /* Stats Section */
@@ -150,7 +155,7 @@ body {
 .stat-number {
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: var(--maju-blue);
     margin-bottom: 0.5rem;
 }
 
@@ -236,14 +241,14 @@ body {
 }
 
 .job-university {
-    color: var(--accent-color);
+    color: var(--maju-blue);
     font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
 
 .job-type {
-    background: var(--accent-color);
+    background: var(--maju-blue);
     color: white;
     padding: 0.2rem 0.8rem;
     border-radius: 15px;
@@ -276,11 +281,11 @@ body {
 }
 
 .btn-apply {
-    background: linear-gradient(45deg, var(--success-color), #059669);
+    background: var(--maju-red);
     border: none;
     color: white;
     padding: 0.5rem 1.2rem;
-    border-radius: 20px;
+    border-radius: 0px;
     font-weight: 600;
     transition: all 0.3s ease;
     text-decoration: none;
@@ -290,7 +295,8 @@ body {
 .btn-apply:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
-    color: white;
+    color: var(--maju-red);
+    border: var(--maju-red) 1px solid;
 }
 
 .job-date {
@@ -305,7 +311,7 @@ body {
 }
 
 .modal-header {
-      background: linear-gradient(135deg,#4f46e5,#1e3a8a);
+      background: var(--maju-blue);
     color: white;
     border-radius: 15px 15px 0 0;
     padding: 1.5rem;
@@ -356,11 +362,11 @@ body {
 }
 
 .btn-apply-modal {
-    background: linear-gradient(45deg, var(--success-color), #059669);
+    background: var(--maju-red);
     border: none;
     color: white;
     padding: 0.75rem 2rem;
-    border-radius: 25px;
+    border-radius: 0px;
     font-weight: 600;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -369,12 +375,14 @@ body {
 .btn-apply-modal:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-    color: white;
+    color: var(--maju-red);
+    background: var(--bg-light);
+    border:  var(--maju-red) 1px solid; 
 }
 
 /* Footer */
 .footer {
-      background: linear-gradient(135deg,#4f46e5,#1e3a8a);
+      background: var(--maju-blue);
     color: white;
     padding: 2rem 0 1rem;
     margin-top: 4rem;
